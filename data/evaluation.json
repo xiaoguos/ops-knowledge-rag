@@ -1,0 +1,370 @@
+[
+  {
+    "id": "q01",
+    "split": "dev",
+    "query": "支付超时的上限是多少",
+    "relevant_document_ids": [
+      "payment-timeout"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "3000",
+    "answerable": true
+  },
+  {
+    "id": "q02",
+    "split": "dev",
+    "query": "PAY_TIMEOUT 之后可以直接重试扣款吗",
+    "relevant_document_ids": [
+      "payment-timeout"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "NOT_FOUND",
+    "answerable": true
+  },
+  {
+    "id": "q03",
+    "split": "dev",
+    "query": "Redis 内存告警阈值是多少",
+    "relevant_document_ids": [
+      "redis-memory"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "85%",
+    "answerable": true
+  },
+  {
+    "id": "q04",
+    "split": "dev",
+    "query": "Redis 线上能用 KEYS 吗",
+    "relevant_document_ids": [
+      "redis-memory"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "SCAN",
+    "answerable": true
+  },
+  {
+    "id": "q05",
+    "split": "test",
+    "query": "订单查询接口每秒限流多少次",
+    "relevant_document_ids": [
+      "api-rate-v1"
+    ],
+    "department": "研发",
+    "version": "1.0",
+    "answer_contains": "50",
+    "answerable": true
+  },
+  {
+    "id": "q06",
+    "split": "test",
+    "query": "订单查询接口每秒限流多少次",
+    "relevant_document_ids": [
+      "api-rate-v2"
+    ],
+    "department": "研发",
+    "version": "2.0",
+    "answer_contains": "100",
+    "answerable": true
+  },
+  {
+    "id": "q07",
+    "split": "test",
+    "query": "DB_POOL_EXHAUSTED 应该如何排查",
+    "relevant_document_ids": [
+      "mysql-pool"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "连接泄漏",
+    "answerable": true
+  },
+  {
+    "id": "q08",
+    "split": "test",
+    "query": "MySQL 慢查询多少毫秒记录日志",
+    "relevant_document_ids": [
+      "mysql-pool"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "1000",
+    "answerable": true
+  },
+  {
+    "id": "q09",
+    "split": "test",
+    "query": "灰度发布错误率达到多少需要回滚",
+    "relevant_document_ids": [
+      "deployment-rollback"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "2%",
+    "answerable": true
+  },
+  {
+    "id": "q10",
+    "split": "test",
+    "query": "应用回滚能自动回滚数据库吗",
+    "relevant_document_ids": [
+      "deployment-rollback"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "独立评审",
+    "answerable": true
+  },
+  {
+    "id": "q11",
+    "split": "test",
+    "query": "退款率怎么计算",
+    "relevant_document_ids": [
+      "refund-definition"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "已创建订单数",
+    "answerable": true
+  },
+  {
+    "id": "q12",
+    "split": "test",
+    "query": "退款率按订单创建时间还是退款完成时间统计",
+    "relevant_document_ids": [
+      "refund-definition"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "创建时间",
+    "answerable": true
+  },
+  {
+    "id": "q13",
+    "split": "test",
+    "query": "P1 故障要求多久响应",
+    "relevant_document_ids": [
+      "incident-severity"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "5 分钟",
+    "answerable": true
+  },
+  {
+    "id": "q14",
+    "split": "test",
+    "query": "P1 故障恢复后多久完成复盘",
+    "relevant_document_ids": [
+      "incident-severity"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "48 小时",
+    "answerable": true
+  },
+  {
+    "id": "q15",
+    "split": "test",
+    "query": "ACCESS_TOKEN_EXPIRED 怎么处理",
+    "relevant_document_ids": [
+      "auth-token"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "重新登录",
+    "answerable": true
+  },
+  {
+    "id": "q16",
+    "split": "test",
+    "query": "访问令牌有效期是多少",
+    "relevant_document_ids": [
+      "auth-token"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "30 分钟",
+    "answerable": true
+  },
+  {
+    "id": "q17",
+    "split": "test",
+    "query": "MySQL 全量备份在几点执行",
+    "relevant_document_ids": [
+      "backup"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "02:00",
+    "answerable": true
+  },
+  {
+    "id": "q18",
+    "split": "test",
+    "query": "数据库恢复演练多久一次",
+    "relevant_document_ids": [
+      "backup"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "每月",
+    "answerable": true
+  },
+  {
+    "id": "q19",
+    "split": "test",
+    "query": "readinessProbe 和 livenessProbe 区别",
+    "relevant_document_ids": [
+      "k8s-probe"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "接收流量",
+    "answerable": true
+  },
+  {
+    "id": "q20",
+    "split": "test",
+    "query": "启动慢的容器如何配置探针",
+    "relevant_document_ids": [
+      "k8s-probe"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "startupProbe",
+    "answerable": true
+  },
+  {
+    "id": "q21",
+    "split": "test",
+    "query": "Webhook 如何避免重复通知",
+    "relevant_document_ids": [
+      "webhook"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "event_id",
+    "answerable": true
+  },
+  {
+    "id": "q22",
+    "split": "test",
+    "query": "通知失败最多重试多少次",
+    "relevant_document_ids": [
+      "webhook"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "3 次",
+    "answerable": true
+  },
+  {
+    "id": "q23",
+    "split": "test",
+    "query": "支付重复扣款如何避免",
+    "relevant_document_ids": [
+      "payment-timeout"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "幂等键",
+    "answerable": true
+  },
+  {
+    "id": "q24",
+    "split": "test",
+    "query": "Redis 缓存实例用什么淘汰策略",
+    "relevant_document_ids": [
+      "redis-memory"
+    ],
+    "department": null,
+    "version": null,
+    "answer_contains": "allkeys-lru",
+    "answerable": true
+  },
+  {
+    "id": "q25",
+    "split": "test",
+    "query": "今年公司的净利润是多少",
+    "relevant_document_ids": [],
+    "department": null,
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q26",
+    "split": "test",
+    "query": "公司董事长的电话号码是多少",
+    "relevant_document_ids": [],
+    "department": null,
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q27",
+    "split": "test",
+    "query": "今天北京天气怎么样",
+    "relevant_document_ids": [],
+    "department": null,
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q28",
+    "split": "test",
+    "query": "下周股票价格会涨吗",
+    "relevant_document_ids": [],
+    "department": null,
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q29",
+    "split": "test",
+    "query": "火星和地球距离是多少",
+    "relevant_document_ids": [],
+    "department": null,
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q30",
+    "split": "test",
+    "query": "采购电脑报销上限是多少",
+    "relevant_document_ids": [],
+    "department": "业务",
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q31",
+    "split": "test",
+    "query": "退款率怎么计算",
+    "relevant_document_ids": [],
+    "department": "研发",
+    "version": null,
+    "answer_contains": null,
+    "answerable": false
+  },
+  {
+    "id": "q32",
+    "split": "test",
+    "query": "订单查询接口限流多少",
+    "relevant_document_ids": [],
+    "department": "研发",
+    "version": "9.0",
+    "answer_contains": null,
+    "answerable": false
+  }
+]
