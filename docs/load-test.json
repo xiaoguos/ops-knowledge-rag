@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-09-16T08:07:46.737832+00:00",
+  "scope": "本地单进程、无生成模型的小规模 HTTP 并发模拟，不是生产容量测试",
+  "health": {
+    "status": "ok",
+    "embedding": "hash:sha256-384-v1",
+    "generation": "extractive",
+    "authorization": false
+  },
+  "requests": 20,
+  "concurrency": 4,
+  "error_count": 0,
+  "error_rate": 0.0,
+  "p50_ms": 26.86,
+  "p95_ms": 50.32,
+  "elapsed_seconds": 0.142,
+  "requests_per_second": 141.14
+}

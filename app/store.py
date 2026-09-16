@@ -2,6 +2,7 @@ import hashlib
 import json
 from pathlib import Path
 import sqlite3
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from .documents import parse_file
 
@@ -23,11 +24,16 @@ class Store:
                 CREATE INDEX IF NOT EXISTS chunks_document ON chunks(document_id);
             """)
 
+    @contextmanager
     def connect(self):
         db = sqlite3.connect(self.path, timeout=10)
         db.row_factory = sqlite3.Row
         db.execute("PRAGMA foreign_keys=ON")
-        return db
+        try:
+            with db:
+                yield db
+        finally:
+            db.close()
 
     def upsert(self, document_id, name, payload, department="运维", version="1.0"):
         digest = hashlib.sha256(payload).hexdigest()

@@ -12,7 +12,7 @@ class RagService:
     def __init__(self, directory="data/runtime", embedder=None):
         self.directory = Path(directory)
         provider = os.getenv("RAG_EMBEDDING", "hash")
-        model = os.getenv("EMBEDDING_MODEL", "text-embedding-v3") if provider == "openai" else os.getenv("RAG_EMBED_MODEL", "intfloat/multilingual-e5-small")
+        model = os.getenv("EMBEDDING_MODEL", "text-embedding-v3") if provider == "openai" else os.getenv("RAG_EMBED_MODEL", "BAAI/bge-small-zh-v1.5")
         self.embedder = embedder or Embedder(provider, model, os.getenv("MODEL_BASE_URL", "http://127.0.0.1:11434/v1"), os.getenv("MODEL_API_KEY", ""))
         self.store = Store(self.directory / "knowledge.db", self.embedder)
 

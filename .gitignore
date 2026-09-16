@@ -6,8 +6,10 @@ __pycache__/
 .env.*
 !.env.example
 data/runtime/
+data/runtime-*/
+data/model-cache/
+pytest-cache-files-*/
 *.db
 *.db-shm
 *.db-wal
 node_modules/
-

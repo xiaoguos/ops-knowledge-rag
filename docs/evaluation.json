@@ -1,0 +1,1179 @@
+{
+  "generated_at": "2026-09-16T08:01:50.321571+00:00",
+  "scope": "自建小样本，4 条开发题与 28 条固定测试题；文档级 Recall@5。关键词检查不等于人工准确率，不评估真实 LLM 幻觉率。",
+  "test_count": 28,
+  "answerable_count": 20,
+  "embedding": "hash:sha256-384-v1",
+  "generation": "extractive",
+  "results": [
+    {
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "answer_keyword_accuracy": 0.9,
+      "false_refusal_rate": 0.1,
+      "correct_refusal_rate": 1,
+      "mean_latency_ms": 3.6104,
+      "details": [
+        {
+          "question_id": "q05",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q06",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q07",
+          "refused": true,
+          "retrieved_document_ids": [
+            "mysql-pool",
+            "payment-timeout",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q08",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "mysql-pool"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q09",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "mysql-pool",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q10",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "deployment-rollback",
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q11",
+          "refused": false,
+          "retrieved_document_ids": [
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q12",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q13",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q14",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q15",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "mysql-pool",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q16",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q17",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "k8s-probe",
+            "mysql-pool",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q18",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "deployment-rollback",
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q19",
+          "refused": false,
+          "retrieved_document_ids": [
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q20",
+          "refused": false,
+          "retrieved_document_ids": [
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q21",
+          "refused": false,
+          "retrieved_document_ids": [
+            "incident-severity",
+            "k8s-probe",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q22",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q23",
+          "refused": true,
+          "retrieved_document_ids": [
+            "incident-severity",
+            "k8s-probe",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q24",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "backup",
+            "k8s-probe",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q25",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q26",
+          "refused": true,
+          "retrieved_document_ids": [
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q27",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q28",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q29",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q30",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q31",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q32",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        }
+      ]
+    },
+    {
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "answer_keyword_accuracy": 0.9,
+      "false_refusal_rate": 0.1,
+      "correct_refusal_rate": 1,
+      "mean_latency_ms": 6.2421,
+      "details": [
+        {
+          "question_id": "q05",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q06",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q07",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "k8s-probe",
+            "mysql-pool",
+            "redis-memory",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q08",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "mysql-pool"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q09",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q10",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "deployment-rollback",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q11",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "payment-timeout",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q12",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "deployment-rollback",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q13",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "incident-severity",
+            "k8s-probe",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q14",
+          "refused": false,
+          "retrieved_document_ids": [
+            "incident-severity",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q15",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "mysql-pool",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q16",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q17",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "deployment-rollback",
+            "mysql-pool",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q18",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "backup",
+            "deployment-rollback"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q19",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "k8s-probe",
+            "mysql-pool",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q20",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "k8s-probe",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q21",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "backup",
+            "incident-severity",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q22",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "auth-token",
+            "backup",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q23",
+          "refused": true,
+          "retrieved_document_ids": [
+            "backup",
+            "incident-severity",
+            "mysql-pool",
+            "payment-timeout"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q24",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "auth-token",
+            "deployment-rollback",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q25",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "backup",
+            "incident-severity",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q26",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "incident-severity",
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q27",
+          "refused": true,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q28",
+          "refused": true,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q29",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "incident-severity",
+            "payment-timeout",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q30",
+          "refused": true,
+          "retrieved_document_ids": [
+            "refund-definition"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q31",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q32",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        }
+      ]
+    },
+    {
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "answer_keyword_accuracy": 0.9,
+      "false_refusal_rate": 0.1,
+      "correct_refusal_rate": 1,
+      "mean_latency_ms": 7.1843,
+      "details": [
+        {
+          "question_id": "q05",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q06",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q07",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "mysql-pool",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q08",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "mysql-pool"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q09",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "mysql-pool",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q10",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "deployment-rollback",
+            "k8s-probe",
+            "mysql-pool"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q11",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "payment-timeout",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q12",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q13",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "k8s-probe",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q14",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q15",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "mysql-pool",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q16",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q17",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "k8s-probe",
+            "mysql-pool",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q18",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "deployment-rollback",
+            "incident-severity"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q19",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "k8s-probe",
+            "mysql-pool",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q20",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "k8s-probe",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q21",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "incident-severity",
+            "k8s-probe",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q22",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q23",
+          "refused": true,
+          "retrieved_document_ids": [
+            "incident-severity",
+            "k8s-probe",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q24",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "backup",
+            "k8s-probe",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q25",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "backup",
+            "incident-severity",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q26",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "incident-severity",
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q27",
+          "refused": true,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q28",
+          "refused": true,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q29",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "incident-severity",
+            "payment-timeout",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q30",
+          "refused": true,
+          "retrieved_document_ids": [
+            "refund-definition"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q31",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q32",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        }
+      ]
+    },
+    {
+      "strategy": "adaptive",
+      "recall_at_5": 1.0,
+      "answer_keyword_accuracy": 0.9,
+      "false_refusal_rate": 0.1,
+      "correct_refusal_rate": 1,
+      "mean_latency_ms": 5.6332,
+      "details": [
+        {
+          "question_id": "q05",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q06",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q07",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "mysql-pool",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q08",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "mysql-pool"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q09",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "mysql-pool",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q10",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "deployment-rollback",
+            "k8s-probe",
+            "mysql-pool"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q11",
+          "refused": false,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "k8s-probe",
+            "payment-timeout",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q12",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q13",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "k8s-probe",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q14",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "incident-severity",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q15",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "mysql-pool",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q16",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q17",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "k8s-probe",
+            "mysql-pool",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q18",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "backup",
+            "deployment-rollback",
+            "incident-severity"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q19",
+          "refused": false,
+          "retrieved_document_ids": [
+            "backup",
+            "k8s-probe",
+            "mysql-pool",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q20",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "incident-severity",
+            "k8s-probe",
+            "refund-definition"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q21",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "incident-severity",
+            "k8s-probe",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q22",
+          "refused": false,
+          "retrieved_document_ids": [
+            "auth-token",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q23",
+          "refused": true,
+          "retrieved_document_ids": [
+            "incident-severity",
+            "k8s-probe",
+            "payment-timeout",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q24",
+          "refused": false,
+          "retrieved_document_ids": [
+            "api-rate-v2",
+            "backup",
+            "k8s-probe",
+            "redis-memory",
+            "webhook"
+          ],
+          "answer_keyword_hit": true
+        },
+        {
+          "question_id": "q25",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "backup",
+            "incident-severity",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q26",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "api-rate-v2",
+            "incident-severity",
+            "k8s-probe"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q27",
+          "refused": true,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q28",
+          "refused": true,
+          "retrieved_document_ids": [
+            "deployment-rollback",
+            "payment-timeout",
+            "redis-memory",
+            "refund-definition",
+            "webhook"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q29",
+          "refused": true,
+          "retrieved_document_ids": [
+            "api-rate-v1",
+            "auth-token",
+            "incident-severity",
+            "payment-timeout",
+            "redis-memory"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q30",
+          "refused": true,
+          "retrieved_document_ids": [
+            "refund-definition"
+          ],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q31",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        },
+        {
+          "question_id": "q32",
+          "refused": true,
+          "retrieved_document_ids": [],
+          "answer_keyword_hit": false
+        }
+      ]
+    }
+  ]
+}

@@ -28,7 +28,7 @@ def hash_vector(text: str, dimension: int = 384) -> list[float]:
 
 
 class Embedder:
-    def __init__(self, provider="hash", model="intfloat/multilingual-e5-small", base_url="", key=""):
+    def __init__(self, provider="hash", model="BAAI/bge-small-zh-v1.5", base_url="", key=""):
         if provider not in {"hash", "fastembed", "openai"}:
             raise ValueError("Unknown embedding provider")
         self.provider, self.model, self.base_url, self.key = provider, model, base_url, key
