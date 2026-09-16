@@ -3,6 +3,7 @@
 Hash embeddings are explicitly NOT a semantic model. Their role is an offline
 control. Local E5 or an OpenAI-compatible embedding endpoint enables dense RAG.
 """
+
 from collections import Counter
 import hashlib
 import math
@@ -15,7 +16,9 @@ def tokens(text: str) -> list[str]:
     text = text.lower()
     latin = re.findall(r"[a-z0-9_./:-]+", text)
     chinese = re.findall(r"[\u4e00-\u9fff]+", text)
-    return latin + [part[i:i + 2] for part in chinese for i in range(max(0, len(part) - 1))]
+    return latin + [
+        part[i : i + 2] for part in chinese for i in range(max(0, len(part) - 1))
+    ]
 
 
 def hash_vector(text: str, dimension: int = 384) -> list[float]:
@@ -28,12 +31,21 @@ def hash_vector(text: str, dimension: int = 384) -> list[float]:
 
 
 class Embedder:
-    def __init__(self, provider="hash", model="BAAI/bge-small-zh-v1.5", base_url="", key=""):
+    def __init__(
+        self, provider="hash", model="BAAI/bge-small-zh-v1.5", base_url="", key=""
+    ):
         if provider not in {"hash", "fastembed", "openai"}:
             raise ValueError("Unknown embedding provider")
-        self.provider, self.model, self.base_url, self.key = provider, model, base_url, key
+        self.provider, self.model, self.base_url, self.key = (
+            provider,
+            model,
+            base_url,
+            key,
+        )
         self.local = None
-        self.fingerprint = f"{provider}:{model if provider != 'hash' else 'sha256-384-v1'}"
+        self.fingerprint = (
+            f"{provider}:{model if provider != 'hash' else 'sha256-384-v1'}"
+        )
 
     def embed(self, texts: list[str], query=False) -> list[list[float]]:
         if not texts:
@@ -43,11 +55,16 @@ class Embedder:
         if self.provider == "fastembed":
             if self.local is None:
                 from fastembed import TextEmbedding
+
                 self.local = TextEmbedding(model_name=self.model)
             method = self.local.query_embed if query else self.local.passage_embed
             return [np.asarray(v).tolist() for v in method(texts)]
         with httpx.Client(timeout=45) as client:
-            response = client.post(self.base_url.rstrip("/") + "/embeddings", headers={"Authorization": f"Bearer {self.key}"}, json={"model": self.model, "input": texts})
+            response = client.post(
+                self.base_url.rstrip("/") + "/embeddings",
+                headers={"Authorization": f"Bearer {self.key}"},
+                json={"model": self.model, "input": texts},
+            )
             response.raise_for_status()
             rows = sorted(response.json()["data"], key=lambda row: row["index"])
             if len(rows) != len(texts):
@@ -62,11 +79,16 @@ def bm25(query: str, documents: list[str]) -> list[float]:
     scores = [0.0] * n
     for term in set(tokens(query)):
         frequency = sum(term in bag for bag in bags)
-        idf = math.log(1 + (n - frequency + .5) / (frequency + .5))
+        idf = math.log(1 + (n - frequency + 0.5) / (frequency + 0.5))
         for i, bag in enumerate(bags):
             tf = bag[term]
             if tf:
-                scores[i] += idf * tf * 2.5 / (tf + 1.5 * (.25 + .75 * sum(bag.values()) / average))
+                scores[i] += (
+                    idf
+                    * tf
+                    * 2.5
+                    / (tf + 1.5 * (0.25 + 0.75 * sum(bag.values()) / average))
+                )
     return scores
 
 
@@ -78,11 +100,16 @@ def cosine(query_vector, vectors):
     if matrix.ndim != 2 or matrix.shape[1] != len(q):
         raise ValueError("Embedding dimensions changed: reindex required")
     denominator = np.linalg.norm(matrix, axis=1) * np.linalg.norm(q)
-    return np.divide(matrix @ q, denominator, out=np.zeros(len(vectors)), where=denominator > 0).tolist()
+    return np.divide(
+        matrix @ q, denominator, out=np.zeros(len(vectors)), where=denominator > 0
+    ).tolist()
 
 
 def rank(scores, k):
-    return sorted((i for i, score in enumerate(scores) if score > 0), key=lambda i: (-scores[i], i))[:k]
+    return sorted(
+        (i for i, score in enumerate(scores) if score > 0),
+        key=lambda i: (-scores[i], i),
+    )[:k]
 
 
 def rrf(rankings, constant=60):

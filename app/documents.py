@@ -16,6 +16,7 @@ def parse_file(name: str, payload: bytes) -> list[Section]:
         return split_markdown(payload.decode("utf-8-sig"))
     if suffix == "pdf":
         from pypdf import PdfReader
+
         reader = PdfReader(BytesIO(payload))
         sections = []
         for page_number, page in enumerate(reader.pages, 1):
@@ -27,16 +28,25 @@ def parse_file(name: str, payload: bytes) -> list[Section]:
         return sections
     if suffix == "docx":
         from docx import Document
+
         doc = Document(BytesIO(payload))
         from docx.table import Table
         from docx.text.paragraph import Paragraph
+
         lines = []
         for block in doc.iter_inner_content():
             if isinstance(block, Paragraph):
                 prefix = "## " if block.style.name.startswith("Heading") else ""
                 lines.append(prefix + block.text)
             elif isinstance(block, Table):
-                lines.append("\n" + "\n".join("| " + " | ".join(cell.text for cell in row.cells) + " |" for row in block.rows) + "\n")
+                lines.append(
+                    "\n"
+                    + "\n".join(
+                        "| " + " | ".join(cell.text for cell in row.cells) + " |"
+                        for row in block.rows
+                    )
+                    + "\n"
+                )
         return split_markdown("\n\n".join(lines))
     raise ValueError("支持 .pdf、.md、.txt、.docx；不支持旧版 .doc")
 
@@ -68,17 +78,22 @@ def split_markdown(text: str, limit=700) -> list[Section]:
             atomic.append(line)
             fenced = not fenced
             if not fenced:
-                append("\n".join(atomic)); atomic = []
+                append("\n".join(atomic))
+                atomic = []
             continue
         if fenced:
-            atomic.append(line); continue
+            atomic.append(line)
+            continue
         if atomic and not line.lstrip().startswith("|"):
-            append("\n".join(atomic)); atomic = []
+            append("\n".join(atomic))
+            atomic = []
         if line.lstrip().startswith("|"):
-            atomic.append(line); continue
+            atomic.append(line)
+            continue
         match = re.match(r"^#{1,6}\s+(.+)$", line)
         if match:
-            flush(); heading = match.group(1)
+            flush()
+            heading = match.group(1)
         elif line.strip():
             append(line)
     if atomic:

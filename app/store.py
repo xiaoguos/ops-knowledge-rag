@@ -38,8 +38,16 @@ class Store:
     def upsert(self, document_id, name, payload, department="运维", version="1.0"):
         digest = hashlib.sha256(payload).hexdigest()
         with self.connect() as db:
-            old = db.execute("SELECT * FROM documents WHERE id=?", (document_id,)).fetchone()
-            if old and (old["digest"], old["department"], old["version"], old["title"], old["embedding_model"]) == (digest, department, version, name, self.embedder.fingerprint):
+            old = db.execute(
+                "SELECT * FROM documents WHERE id=?", (document_id,)
+            ).fetchone()
+            if old and (
+                old["digest"],
+                old["department"],
+                old["version"],
+                old["title"],
+                old["embedding_model"],
+            ) == (digest, department, version, name, self.embedder.fingerprint):
                 return {"id": document_id, "changed": False}
         sections = parse_file(name, payload)
         if not sections:
@@ -51,25 +59,57 @@ class Store:
         with self.connect() as db:
             db.execute("BEGIN IMMEDIATE")
             db.execute("DELETE FROM documents WHERE id=?", (document_id,))
-            db.execute("INSERT INTO documents VALUES(?,?,?,?,?,?,?)", (document_id, name, department, version, digest, self.embedder.fingerprint, datetime.now(timezone.utc).isoformat()))
+            db.execute(
+                "INSERT INTO documents VALUES(?,?,?,?,?,?,?)",
+                (
+                    document_id,
+                    name,
+                    department,
+                    version,
+                    digest,
+                    self.embedder.fingerprint,
+                    datetime.now(timezone.utc).isoformat(),
+                ),
+            )
             for i, (section, vector) in enumerate(zip(sections, vectors)):
-                chunk_id = hashlib.sha256(f"{document_id}:{digest}:{i}".encode()).hexdigest()[:20]
-                db.execute("INSERT INTO chunks VALUES(?,?,?,?,?,?)", (chunk_id, document_id, section.heading, section.text, section.page, json.dumps(vector)))
+                chunk_id = hashlib.sha256(
+                    f"{document_id}:{digest}:{i}".encode()
+                ).hexdigest()[:20]
+                db.execute(
+                    "INSERT INTO chunks VALUES(?,?,?,?,?,?)",
+                    (
+                        chunk_id,
+                        document_id,
+                        section.heading,
+                        section.text,
+                        section.page,
+                        json.dumps(vector),
+                    ),
+                )
         return {"id": document_id, "changed": True, "chunks": len(sections)}
 
     def delete(self, document_id):
         with self.connect() as db:
-            return db.execute("DELETE FROM documents WHERE id=?", (document_id,)).rowcount > 0
+            return (
+                db.execute("DELETE FROM documents WHERE id=?", (document_id,)).rowcount
+                > 0
+            )
 
     def documents(self):
         with self.connect() as db:
-            return [dict(row) for row in db.execute("SELECT d.*, (SELECT COUNT(*) FROM chunks c WHERE c.document_id=d.id) AS chunks FROM documents d ORDER BY d.id")]
+            return [
+                dict(row)
+                for row in db.execute(
+                    "SELECT d.*, (SELECT COUNT(*) FROM chunks c WHERE c.document_id=d.id) AS chunks FROM documents d ORDER BY d.id"
+                )
+            ]
 
     def chunks(self, department=None, version=None):
         clauses, params = [], []
         for column, value in [("department", department), ("version", version)]:
             if value:
-                clauses.append(f"d.{column}=?"); params.append(value)
+                clauses.append(f"d.{column}=?")
+                params.append(value)
         query = "SELECT c.*, d.title, d.department, d.version, d.embedding_model FROM chunks c JOIN documents d ON d.id=c.document_id"
         if clauses:
             query += " WHERE " + " AND ".join(clauses)
