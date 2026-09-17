@@ -233,10 +233,17 @@ async function history() {
 }
 start({
   id: "knowledge",
-  brand: "Atlas Knowledge",
-  title: "Atlas Knowledge · 企业知识平台",
+  brand: "企业内部知识库智能问答平台",
+  title: "企业内部知识库智能问答平台",
+  seal: "知",
+  workspaceLabel: "知识服务 · 资料与证据",
+  loginLabel: "企业资料，统一查阅",
+  loginHeading: "进入知识工作区",
+  loginFootnote: "检索范围由部门授权决定 · 回答支持原文核对",
+  footer: "资料有版本 · 回答有依据",
+  steps: ["接入与更新企业资料", "查找授权范围内的证据", "核对回答与文档原文"],
   symbol: "file",
-  tagline: "让企业知识<br>成为可靠的答案。",
+  tagline: "查资料，<br>也查清依据。",
   description:
     "统一管理知识资产，以权限为边界，以证据为依据，让每一次检索与问答都有迹可循。",
   defaultPage: "ask",

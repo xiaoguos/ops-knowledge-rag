@@ -11,7 +11,7 @@ load_dotenv()
 def create_app(platform=None, embedder=None, generator=None):
     platform = platform or Platform()
     knowledge = Knowledge(platform, embedder, generator)
-    app = FastAPI(title="企业知识库", version="1.0.0")
+    app = FastAPI(title="企业内部知识库智能问答平台", version="1.0.0")
     app.state.platform = platform
     app.state.knowledge = knowledge
     app.state.handle_job = knowledge.index_job
