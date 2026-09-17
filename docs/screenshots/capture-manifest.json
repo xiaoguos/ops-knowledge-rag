@@ -1,0 +1,16 @@
+{
+  "project": "ops-knowledge-rag",
+  "commit": "929c49a25cd14e38d37fcb805b78190a6010a574",
+  "captured_at": "2026-09-17T12:54:22Z",
+  "database": "isolated SQLite",
+  "model_generation": "not exercised",
+  "javascript_errors": [],
+  "files": {
+    "login.png": "f9f661ef5ebe9d3c3d1574464cd7a846d182d526ce74cb8124688029d78be1d7",
+    "users.png": "4f059516f64c4ca352b64ad1cdec79653eb091bc5eb2cb3287e53ca14ea0e58b",
+    "mobile.png": "1794dbac2774331344ff8284dae64a54b95e5b38c778326547dc25f740bd6b15",
+    "documents.png": "eed695272421309fb197be769c29b03c9fc81a0be5602f6da48d242e37f1ad15",
+    "ask.png": "09f22bf689145570acafce0237abeecc9886cd428d6dea27d41f626965c2c8b4",
+    "audit.png": "26af4b18737daf2f395b4aa85cdf5086d22cc290fa5474d4d05e2299645bcd82"
+  }
+}

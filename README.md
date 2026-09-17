@@ -1,50 +1,112 @@
 # 企业内部知识库智能问答平台
 
-[在线界面](https://xiaoguos.github.io/ops-knowledge-rag/) · [部署指南](docs/deployment.md) · [架构说明](docs/architecture.md) · [运行截图说明](docs/screenshots/README.md)
+面向运维手册、业务规范、接口文档和故障案例的知识问答系统。通过文档版本管理、权限过滤和混合检索组织企业知识，在回答旁提供原文依据，支持资料查询与核对。
 
-浅色知识工作区：问答与原文证据分栏，资料按部门授权检索，管理员单独维护文档版本与成员权限。
+[在线访问](https://xiaoguos.github.io/ops-knowledge-rag/) · [部署指南](docs/deployment.md) · [架构设计](docs/architecture.md)
+
+## 项目背景
+
+企业资料分散在多种文件格式和文档版本中，关键词搜索难以覆盖自然语言问题，直接使用大模型又缺少业务依据。项目采用 RAG，将授权范围内的检索结果作为生成上下文，并保留回答与文档之间的引用关系。
+
+## 核心功能
+
+- 文档接入：支持 PDF、Word、Markdown 和 TXT，按文档结构切分，保留部门与版本信息。
+- 增量更新：后台构建新版本索引，完成后切换生效版本；更新失败时保留已有可用资料。
+- 混合检索：结合 BGE 中文向量、关键词候选和 BM25 评分，通过 RRF 融合结果。
+- 知识问答：支持连续提问、部门与版本筛选、原文引用和证据不足拒答。
+- 访问控制：服务端校验租户、角色与部门授权，区分资料管理和知识使用权限。
+- 记录追踪：保存个人问答历史、索引任务状态与管理操作审计。
+
+## 技术栈
+
+| 层次           | 技术                                            |
+| -------------- | ----------------------------------------------- |
+| API 与任务执行 | Python、FastAPI、独立 Worker                    |
+| 数据与索引     | PostgreSQL、pgvector、SQLAlchemy、Alembic       |
+| 文档与检索     | BGE 中文嵌入、BM25、RRF、结构感知切分           |
+| 模型接入       | OpenAI-compatible API、结构化输出、引用校验     |
+| 前端与部署     | ES Modules、CSS、Docker Compose、GitHub Actions |
+
+## 系统架构
 
 ```mermaid
 flowchart LR
-    A[管理员上传文档] --> B[校验与结构切分]
+    A[上传文档] --> B[校验与结构切分]
     B --> C[持久作业队列]
-    C --> D[Worker 构建新版本索引]
-    D --> E[原子切换可用版本]
-    U[成员提交问题] --> P[租户与部门过滤]
+    C --> D[Worker 构建索引]
+    D --> E[激活文档版本]
+    U[提交问题] --> P[租户与部门授权过滤]
     E --> P
-    P --> R[向量与关键词检索 / RRF]
-    R --> M[模型生成结构化回答]
+    P --> R[向量与关键词检索]
+    R --> F[RRF 融合]
+    F --> M[模型生成回答]
     M --> V[引用与引文校验]
-    V --> W[回答 / 拒答 / 原文证据]
+    V --> W[回答与原文证据]
 ```
 
-当前截图说明页中的图片为此前界面版本的真实运行记录，不代表本次新版布局；新版截图将在浏览器实际运行验收后替换，不使用合成图代替。
+API 处理认证、上传和问答请求，Worker 独立执行文档索引。版本状态保存在数据库中，通过事务切换生效版本，避免更新过程中出现不完整索引。
 
-面向企业内部文档的实际后端系统：文档导入与版本管理、后台语义索引、权限过滤、混合检索、模型回答与原文引用。生产入口不使用内置示例资料，也不提供浏览器模拟回答。
+检索两路均应用权限和版本过滤。模型返回结构化回答，服务端核对引用 ID 与对应原文，再返回回答和证据。
 
-**交付状态：上线候选实现，尚待后端主机与真实模型环境验收。GitHub Pages 仅是客户端，不能代替后端部署。**
+## 功能展示
 
-## 当前实现
+### 1. 账号登录
 
-- PostgreSQL + pgvector 512维 BGE 中文向量，PostgreSQL全文候选 + BM25评分 + RRF融合；当前密集检索为精确距离排序，不宣称已实现百万级 ANN 容量。
-- PDF/DOCX/Markdown/TXT 解析，结构感知切分，异步索引；新版本完成后原子切换，失败保留旧可用版本，旧任务不能覆盖新版本。
-- 服务端租户、角色、部门权限；管理员管理文档与成员，普通成员只能检索授权部门。
-- 真实 OpenAI-compatible 模型接口。未配置/超时/错误时明确失败；引用 ID 与引文子串校验，不声称这种校验能证明结论语义正确。
-- 会话与审计持久化，问答历史属于创建者。部门权限撤销后，相关历史回答不再返回原文。
+使用企业账号进入工作区，按角色显示可用功能。
 
-## 运行和验证
+![账号登录](docs/screenshots/login.png)
 
-见 [部署指南](docs/deployment.md)、[架构说明](docs/architecture.md) 与 [开发日志](docs/development-log.md)。
+### 2. 文档接入与索引
+
+上传资料时指定部门和版本，查看索引状态与当前生效版本。
+
+![知识资产与索引状态](docs/screenshots/documents.png)
+
+### 3. 知识问答
+
+通过部门和版本筛选检索范围，回答与参考资料分栏展示。
+
+![知识问答工作区](docs/screenshots/ask.png)
+
+### 4. 成员与权限
+
+管理员维护成员状态、角色和部门授权，控制资料访问范围。
+
+![成员与权限管理](docs/screenshots/users.png)
+
+### 5. 操作审计
+
+记录操作人、资源和变更时间，便于追踪管理操作。
+
+![操作审计](docs/screenshots/audit.png)
+
+### 6. 移动端访问
+
+<img src="docs/screenshots/mobile.png" alt="知识问答移动端" width="390">
+
+## 本地运行
+
+准备 Docker、Docker Compose 和模型服务，复制 .env.example 为 .env，配置数据库密码以及模型 API 地址、名称和密钥。
+
+```bash
+docker compose up -d --build
+docker compose exec api python -m scripts.bootstrap
+```
+
+通过交互命令创建管理员，再接入文档和创建成员。完整配置、TLS 与备份流程见 [部署指南](docs/deployment.md)。模型密钥仅在后端使用，环境文件不提交到仓库。
+
+## 自动化测试
 
 ```bash
 pip install ".[dev]"
 APP_ENV=test pytest -q
+npm test
 ```
 
-配置 TEST_DATABASE_URL 后，同一组生产平台测试使用 PostgreSQL，而非 SQLite。CI 运行 PostgreSQL 集成测试、迁移、Docker构建和 API/Worker 就绪检查，成功后发布 web/。
+配置 `TEST_DATABASE_URL` 可运行 PostgreSQL 集成测试。GitHub Actions 执行测试、数据库迁移、镜像构建及 API/Worker 就绪检查。
 
-## 目录与历史研究
+## 在线访问
 
-app/main.py + app/production.py 是产品入口。app/service.py、app/store.py 与旧检索评估脚本是早期基线研究，不能用于生产启动；data/ 内样本不会自动导入产品。docs/ 的旧评估数据是阶段一实验，不是当前系统线上指标。
+**[企业内部知识库智能问答平台](https://xiaoguos.github.io/ops-knowledge-rag/)**
 
-面试手册独立交付，不放在产品导航。没有真实模型质量评估和线上负载数据前，不填写89%准确率、17%召回提升或生产并发数字。
+前端部署在 GitHub Pages，服务地址由部署配置统一管理。文档处理、数据库和模型调用由后端提供，当前公共试用服务尚未开放。
