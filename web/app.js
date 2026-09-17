@@ -16,6 +16,18 @@ import {
   icon,
 } from "./common.js";
 let conversationId = null;
+let workspaceUserId = null;
+document.addEventListener("click", (event) => {
+  const citation = event.target.closest(".citation-link");
+  if (!citation) return;
+  const evidence = Array.from(
+    document.querySelectorAll("[data-evidence-id]"),
+  ).find((element) => element.dataset.evidenceId === citation.dataset.citation);
+  if (!evidence) return;
+  evidence.open = true;
+  evidence.scrollIntoView({ behavior: "smooth", block: "center" });
+  evidence.querySelector("summary").focus();
+});
 async function documents() {
   const rows = await api("/documents"),
     admin = currentUser().role === "admin";
@@ -120,7 +132,21 @@ function renderAnswer(answer) {
       ? "本次证据不足，系统已拒绝生成确定性结论。"
       : "回答基于下方检索证据生成，请点击引用核对原文。") +
     '</div><div class="bodytext">' +
-    esc(answer.answer) +
+    (answer.refused
+      ? esc(answer.answer)
+      : answer.claims
+          .map(
+            (claim, index) =>
+              esc(claim.text) +
+              ' <button type="button" class="citation-link" data-citation="' +
+              esc(claim.citation_id) +
+              '" aria-label="查看第' +
+              (index + 1) +
+              '条结论的原文依据">[' +
+              (index + 1) +
+              "]</button>",
+          )
+          .join("\n\n")) +
     '</div><div class="actions"><span class="badge">' +
     esc(answer.latency_ms) +
     ' ms</span><span class="muted">会话已保存在服务端</span></div>'
@@ -131,7 +157,9 @@ function renderEvidence(evidence) {
     ? evidence
         .map(
           (e, i) =>
-            '<details class="evidence" ' +
+            '<details class="evidence" data-evidence-id="' +
+            esc(e.id) +
+            '" ' +
             (i === 0 ? "open" : "") +
             "><summary><strong>" +
             esc(e.title) +
@@ -254,5 +282,11 @@ start({
     { id: "users", label: "成员与权限", icon: "users", admin: true },
     { id: "audit", label: "审计日志", icon: "shield", admin: true },
   ],
-  render: (page) => ({ ask, documents, history })[page](),
+  render: (page) => {
+    if (workspaceUserId !== currentUser().id) {
+      workspaceUserId = currentUser().id;
+      conversationId = null;
+    }
+    return { ask, documents, history }[page]();
+  },
 });

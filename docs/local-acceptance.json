@@ -1,0 +1,35 @@
+{
+  "verified_at": "2026-09-17T13:32:16.518212+00:00",
+  "scope": "local business acceptance",
+  "database": "persistent SQLite (APP_ENV=test)",
+  "model": "deepseek-flash",
+  "model_mode": "live",
+  "data": "synthetic acceptance fixtures",
+  "http_checks": {
+    "knowledge.upload_parse_real_embedding": true,
+    "knowledge.live_answer_and_exact_quotes": true,
+    "knowledge.answer_semantics": true,
+    "knowledge.followup": true,
+    "knowledge.persisted_history": true,
+    "knowledge.other_user_cannot_read_history": true,
+    "knowledge.unsupported_fact_refused": true,
+    "knowledge.atomic_version_update": true,
+    "knowledge.department_authorization": true,
+    "knowledge.member_cannot_manage_documents": true,
+    "knowledge.delete_removes_visibility": true
+  },
+  "browser_passed": true,
+  "public_backend_deployed": false,
+  "production_capacity_verified": false,
+  "owned_service_restart_recovery_passed": true,
+  "same_tab_identity_switch_passed": true,
+  "browser_checks": [
+    "login",
+    "answer_and_exact_citation",
+    "click_citation_opens_source",
+    "followup",
+    "relogin_and_persisted_history",
+    "390px_no_horizontal_overflow",
+    "logout"
+  ]
+}

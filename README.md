@@ -19,13 +19,13 @@
 
 ## 技术栈
 
-| 层次           | 技术                                            |
-| -------------- | ----------------------------------------------- |
-| API 与任务执行 | Python、FastAPI、独立 Worker                    |
-| 数据与索引     | PostgreSQL、pgvector、SQLAlchemy、Alembic       |
-| 文档与检索     | BGE 中文嵌入、BM25、RRF、结构感知切分           |
-| 模型接入       | OpenAI-compatible API、结构化输出、引用校验     |
-| 前端与部署     | ES Modules、CSS、Docker Compose、GitHub Actions |
+| 层次           | 技术                                                  |
+| -------------- | ----------------------------------------------------- |
+| API 与任务执行 | Python、FastAPI、独立 Worker                          |
+| 数据与索引     | PostgreSQL、pgvector、SQLAlchemy、Alembic             |
+| 文档与检索     | BGE 中文嵌入、BM25、RRF、结构感知切分                 |
+| 模型接入       | DeepSeek、OpenAI-compatible API、结构化输出、引用校验 |
+| 前端与部署     | ES Modules、CSS、Docker Compose、GitHub Actions       |
 
 ## 系统架构
 
@@ -64,23 +64,41 @@ API 处理认证、上传和问答请求，Worker 独立执行文档索引。版
 
 ### 3. 知识问答
 
-通过部门和版本筛选检索范围，回答与参考资料分栏展示。
+通过部门和版本筛选检索范围，回答与参考资料分栏展示；点击结论后的引用编号展开对应原文。
 
 ![知识问答工作区](docs/screenshots/ask.png)
 
-### 4. 成员与权限
+### 4. 连续追问
+
+在同一会话中追问告警阈值，结合历史问题检索当前生效版本。
+
+![连续追问与当前版本证据](docs/screenshots/followup.png)
+
+### 5. 问答历史
+
+会话保存在后端，重新登录后可查看问题、回答和原文依据。
+
+![持久化问答历史](docs/screenshots/history.png)
+
+### 6. 证据不足拒答
+
+对于资料中没有依据的问题，不生成确定性事实。
+
+![证据不足拒答](docs/screenshots/refusal.png)
+
+### 7. 成员与权限
 
 管理员维护成员状态、角色和部门授权，控制资料访问范围。
 
 ![成员与权限管理](docs/screenshots/users.png)
 
-### 5. 操作审计
+### 8. 操作审计
 
 记录操作人、资源和变更时间，便于追踪管理操作。
 
 ![操作审计](docs/screenshots/audit.png)
 
-### 6. 移动端访问
+### 9. 移动端访问
 
 <img src="docs/screenshots/mobile.png" alt="知识问答移动端" width="390">
 
@@ -104,6 +122,8 @@ npm test
 ```
 
 配置 `TEST_DATABASE_URL` 可运行 PostgreSQL 集成测试。GitHub Actions 执行测试、数据库迁移、镜像构建及 API/Worker 就绪检查。
+
+本地已使用真实 DeepSeek 验证文档索引、问答引用、连续追问、历史保存、拒答和版本更新。运行截图使用验收资料，记录见 [本地验收结果](docs/local-acceptance.json)。可使用 `python -m scripts.acceptance --help` 查看真实模型验收参数。
 
 ## 在线访问
 

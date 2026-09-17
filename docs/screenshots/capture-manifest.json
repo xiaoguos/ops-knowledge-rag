@@ -1,16 +1,19 @@
 {
-  "project": "ops-knowledge-rag",
-  "commit": "929c49a25cd14e38d37fcb805b78190a6010a574",
-  "captured_at": "2026-09-17T12:54:22Z",
-  "database": "isolated SQLite",
-  "model_generation": "not exercised",
+  "captured_at": "2026-09-17T13:33:29.279026+00:00",
+  "database": "persistent local SQLite",
+  "model": "deepseek-flash",
+  "model_generation": "live HTTP and browser business acceptance passed",
+  "data": "synthetic acceptance fixtures",
   "javascript_errors": [],
   "files": {
-    "login.png": "f9f661ef5ebe9d3c3d1574464cd7a846d182d526ce74cb8124688029d78be1d7",
-    "users.png": "4f059516f64c4ca352b64ad1cdec79653eb091bc5eb2cb3287e53ca14ea0e58b",
-    "mobile.png": "1794dbac2774331344ff8284dae64a54b95e5b38c778326547dc25f740bd6b15",
-    "documents.png": "eed695272421309fb197be769c29b03c9fc81a0be5602f6da48d242e37f1ad15",
-    "ask.png": "09f22bf689145570acafce0237abeecc9886cd428d6dea27d41f626965c2c8b4",
-    "audit.png": "26af4b18737daf2f395b4aa85cdf5086d22cc290fa5474d4d05e2299645bcd82"
+    "users.png": "46b7f63a5f3c30ae2d4743767a00413d0b5bcb89f27b287a2b080d2ed6acd87b",
+    "followup.png": "216238b5cd2a4fa2b38475dbe98eee7a156029582dcb07a4bf0ab4f582fb6caa",
+    "login.png": "4b2f1b24db630272d2118ed1b32fb02a1e4c588e2834cddb5539bfdb4aac058e",
+    "history.png": "39caf3bfa780eee2deb81ab99c6317c7042dfb1fb06dc15513352aa2a5d08f61",
+    "documents.png": "61abf61421758d5af858152055aafe803fd647542f65dda5ffcbad94ad3afb58",
+    "ask.png": "6cdb731f6a3eae7fbaa9f39633e492cb7ae0e488f0aa6f4c1c89d3fc5fd10b2d",
+    "mobile.png": "cc536c9e30d9a0bc36d1a136df0acebd4c3db523c3cd12888d338c7ffa210822",
+    "audit.png": "320b8598c154c953ba30c416d03d821c0a021325ca64cdfe4b77c4c0cf9011bd",
+    "refusal.png": "b3e3933f2f9670eddf5f278e0e4e37e9f7f63f8ae035e3dd780981d3de3d3847"
   }
 }

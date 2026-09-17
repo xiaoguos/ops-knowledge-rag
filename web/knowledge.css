@@ -422,6 +422,15 @@ td {
     line-height: 1.7;
   }
 }
+.citation-link {
+  border: 0;
+  padding: 2px 5px;
+  color: var(--accent);
+  background: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
 @media (prefers-reduced-motion: reduce) {
   .spinner {
     animation: none;
