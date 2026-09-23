@@ -152,6 +152,8 @@ npm test
 
 新增扫描件链路的 [浏览器验收记录](docs/ocr-browser-acceptance.json) 与 [分层评测说明](docs/quality-and-evaluation.md) 分别记录解析、检索、引用契约和人工评分口径。36 条合成回归集在各检索方案上结果持平，暂不宣称召回提升；真实模型小样本检查也不等同于业务准确率。
 
+另设24条[困难场景评测](docs/hard-case-review.md)，覆盖相似错误码、近似接口、版本替换、跨租户隔离与指代；包含3份复杂PDF解析回归及可复现的失败记录。困难集与基础回归集分开报告，不混用样本分母。
+
 ## 在线访问
 
 **[企业内部知识库智能问答平台](https://xiaoguos.github.io/ops-knowledge-rag/)**

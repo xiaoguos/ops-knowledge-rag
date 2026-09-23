@@ -15,6 +15,9 @@ def review_template(report, digest):
                        "correct": "回答的事实、数值、版本正确；拒答是否符合授权范围内的资料。",
                        "complete": "覆盖问题全部必要要点；没有遗漏关键限制。"},
             "labels": [{"case_id": row["case_id"], "strategy": row["strategy"],
+                        "query": row.get("query", "See source dataset"),
+                        "model_output": {"refused": row.get("refused"), "claims": row.get("claims", [])},
+                        "evidence": row.get("evidence", []),
                         "reviewer": "", "reviewed_at": "", "supported": None,
                         "correct": None, "complete": None, "notes": ""}
                        for row in report["details"] if "human_review" in row]}

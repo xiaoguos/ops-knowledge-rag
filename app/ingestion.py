@@ -6,6 +6,7 @@ import base64
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 from threading import Lock
 
@@ -121,7 +122,16 @@ def layout_text(regions):
             if gap > 3 * (rows[end - 1][0]["bottom"] - rows[end - 1][0]["top"]):
                 break
             end += 1
-        if end - index >= 3:
+        group = rows[index:end]
+        cells = [b["text"] for row in group for b in row]
+        prose_columns = (end - index >= 3 and
+                         sum(bool(re.search(r"[。！？.!?]$", text.strip())) for text in cells) >= len(cells) / 2)
+        if prose_columns:
+            # Aligned full sentences may be parallel prose, not a data table.
+            ambiguous = True
+            lines.extend("  ".join(b["text"] for b in row) for row in group)
+            index = end
+        elif end - index >= 3:
             for number, row in enumerate(rows[index:end]):
                 lines.append("| " + " | ".join(b["text"].replace("|", "\\|") for b in row) + " |")
                 if number == 0:

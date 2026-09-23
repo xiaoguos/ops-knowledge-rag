@@ -31,15 +31,30 @@ def mean(values):
     return round(statistics.mean(present), 4) if present else None
 
 
+def validate_dataset(dataset, corpus):
+    ids = [item["id"] for item in corpus]
+    cases = [case["id"] for case in dataset["cases"]]
+    if len(set(ids)) != len(ids) or len(set(cases)) != len(cases):
+        raise ValueError("Duplicate corpus or case IDs")
+    for case in dataset["cases"]:
+        relevant, forbidden = set(case["relevant"]), set(case.get("forbidden", []))
+        if not (relevant | forbidden) <= set(ids) or relevant & forbidden:
+            raise ValueError("Invalid evidence labels: " + case["id"])
+        if case.get("expected_refusal") and relevant:
+            raise ValueError("Refusal cases cannot label answer evidence")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--live", action="store_true")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--cases", help="Comma-separated case IDs for a bounded live run")
     parser.add_argument("--output", default="docs/production-evaluation.json")
+    parser.add_argument("--dataset", default="data/production-evaluation.json")
+    parser.add_argument("--corpus", default="data/corpus.json")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    cases_path = root / "data/production-evaluation.json"
+    cases_path = root / args.dataset
     dataset = json.loads(cases_path.read_text(encoding="utf-8"))
     cases = dataset["cases"][:args.limit or None]
     if args.limit < 0:
@@ -51,7 +66,9 @@ def main():
         cases = [c for c in cases if c["id"] in ids]
     if not cases:
         parser.error("No cases selected")
-    corpus = json.loads((root / "data/corpus.json").read_text(encoding="utf-8"))
+    corpus_path = root / args.corpus
+    corpus = json.loads(corpus_path.read_text(encoding="utf-8"))
+    validate_dataset(dataset, corpus)
     os.environ["APP_ENV"] = "test"
     rows = []
     with tempfile.TemporaryDirectory() as temp:
@@ -60,39 +77,54 @@ def main():
             Base.metadata.create_all(platform.engine)
             service = Knowledge(platform)
             names = {}
+            documents = {}
             for item in corpus:
                 with platform.transaction() as db:
-                    doc = Document(tenant="evaluation", owner_id="evaluation", revision=1)
-                    db.add(doc)
-                    db.flush()
+                    key = (item.get("tenant", "evaluation"), item.get("document_key", item["id"]))
+                    if key in documents:
+                        doc = db.get(Document, documents[key])
+                        doc.revision += 1
+                    else:
+                        doc = Document(tenant=key[0], owner_id="evaluation", revision=1)
+                        db.add(doc)
+                        db.flush()
+                        documents[key] = doc.id
                     payload = item["content"].encode()
-                    version = DocumentVersion(document_id=doc.id, revision=1, filename=item["title"] + ".md",
+                    version = DocumentVersion(document_id=doc.id, revision=doc.revision, filename=item["title"] + ".md",
                         department=item["department"], version=item["version"], payload=payload,
                         digest=hashlib.sha256(payload).hexdigest())
                     db.add(version)
                     db.flush()
-                    db.add(Job(tenant="evaluation", owner_id="evaluation", kind="index", payload={"version_id": version.id}))
-                    names[doc.id] = item["id"]
+                    db.add(Job(tenant=doc.tenant, owner_id="evaluation", kind="index", payload={"version_id": version.id}))
+                    names[version.id] = item["id"]
                 service.index_job(platform.claim())
             for case in cases:
                 user = User(id="evaluation", tenant="evaluation", role="member" if "departments" in case else "admin",
                             departments=case.get("departments", []))
                 for strategy in ("bm25", "vector", "hybrid", "hybrid_expanded"):
-                    plan = plan_query(case["query"], memory_layers([]))
+                    memory = memory_layers(case.get("history", []))
+                    plan = plan_query(case["query"], memory)
                     expanded = strategy == "hybrid_expanded"
                     started = time.perf_counter()
                     hits = service.search(user, plan["resolved"] if expanded else case["query"],
                         version_label=case.get("version"), strategy="hybrid" if expanded else strategy,
                         k=5, original=case["query"], expand_parent=expanded)
-                    ids = [names[h["document_id"]] for h in hits]
+                    ids = [names[h["version_id"]] for h in hits]
+                    requirements = case.get("required_evidence", [])
+                    joined = "\n".join(h["text"] for h in hits)
                     row = {"case_id": case["id"], "family": case["family"], "strategy": strategy,
                            **retrieval_metrics(ids, case["relevant"]),
                            "retrieved": ids, "retrieval_ms": round((time.perf_counter() - started) * 1000, 2),
-                           "permission_pass": all(user.role == "admin" or h["department"] in user.departments for h in hits)}
+                           "permission_pass": all(user.role == "admin" or h["department"] in user.departments for h in hits),
+                           "forbidden_evidence_pass": not bool(set(ids) & set(case.get("forbidden", []))),
+                           "expected": case["relevant"], "query": case["query"],
+                           "resolved_query": plan["resolved"] if expanded else case["query"]}
+                    row["required_text_coverage"] = (sum(t in joined for t in requirements) / len(requirements)
+                                                     if requirements else None)
                     if args.live and expanded:
                         started = time.perf_counter()
                         try:
-                            answer = service.generate(case["query"], hits, memory_layers([])) if hits else {"refused": True, "claims": []}
+                            answer = service.generate(case["query"], hits, memory) if hits else {"refused": True, "claims": []}
                             row.update(answer)
                             row["refusal_match"] = answer["refused"] == case.get("expected_refusal", False)
                             evidence = {h["id"]: h["text"] for h in hits}
@@ -117,6 +149,8 @@ def main():
                         "all_evidence_at_5": mean(r["all_evidence_at_5"] for r in subset),
                         "permission_cases": sum(r["family"] == "permission" for r in subset),
                         "permission_pass_rate": mean(r["permission_pass"] for r in subset if r["family"] == "permission"),
+                        "forbidden_evidence_pass_rate": mean(r["forbidden_evidence_pass"] for r in subset),
+                        "required_text_coverage": mean(r["required_text_coverage"] for r in subset),
                         "generation_attempts": sum("generation_ms" in r for r in subset),
                         "generation_errors": sum("generation_error" in r for r in subset),
                         "refusal_match_rate": mean(r.get("refusal_match") for r in subset),
@@ -126,6 +160,11 @@ def main():
               "entrypoint": "app.production.Knowledge", "database": "isolated SQLite; not a PostgreSQL load test",
               "embedding": service.embedder.fingerprint, "generation": "live" if args.live else "not_run",
               "case_count": len(cases), "dataset_sha256": hashlib.sha256(cases_path.read_bytes()).hexdigest(),
+              "corpus_sha256": hashlib.sha256(corpus_path.read_bytes()).hexdigest(),
+              "corpus_versions": len(corpus), "active_documents": len(documents),
+              "failed_retrieval_cases": [{"case_id": r["case_id"], "strategy": r["strategy"],
+                  "expected": r["expected"], "retrieved": r["retrieved"]} for r in rows
+                  if r["all_evidence_at_5"] is False or not r["forbidden_evidence_pass"]],
               "metric_unit": "unique gold document coverage among the first 5 evidence items; unanswerable excluded from recall",
               "summary": summary, "human_semantic_pass_rate": None, "details": rows}
     path = root / args.output

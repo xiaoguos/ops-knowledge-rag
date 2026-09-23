@@ -48,6 +48,15 @@ def test_unaligned_columns_are_not_filled_with_invented_cells():
     assert "合并单元格或正文" in text
 
 
+def test_aligned_prose_is_flagged_instead_of_claimed_as_table():
+    cells = [positioned(value, x, y) for y, values in [(0, ["支付处理", "退款处理"]),
+             (40, ["先检查订单。", "先核对申请。"]), (80, ["不得重复扣款。", "不得重复退款。"])]
+             for x, value in zip([0, 250], values)]
+    text, layout = layout_text(cells)
+    assert layout == {"table_candidates": 0, "ambiguous_columns": True}
+    assert "---" not in text and "不得重复扣款。" in text
+
+
 def test_scanned_pages_are_not_silently_dropped(monkeypatch):
     monkeypatch.setattr("app.ingestion.render_page", lambda payload, n: bytes([n]))
     report = process_document("scan.pdf", pdf(2), ocr=lambda png: [region()] if png == b"\x01" else [])
