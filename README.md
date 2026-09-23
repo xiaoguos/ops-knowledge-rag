@@ -16,6 +16,8 @@
 - 知识问答：支持连续提问、部门与版本筛选、原文引用和证据不足拒答。
 - 访问控制：服务端校验租户、角色与部门授权，区分资料管理和知识使用权限。
 - 记录追踪：保存个人问答历史、索引任务状态与管理操作审计。
+- 扫描件复核：本地 OCR 保留页码与识别区域，生成简单表格候选；管理员对照原图修订后再入库，可配置视觉模型兜底。
+- 检索上下文：支持口语/指代处理、可选模型改写、短块检索与父上下文扩展，并保存改写过程。
 
 ## 技术栈
 
@@ -23,7 +25,7 @@
 | -------------- | ----------------------------------------------------- |
 | API 与任务执行 | Python、FastAPI、独立 Worker                          |
 | 数据与索引     | PostgreSQL、pgvector、SQLAlchemy、Alembic             |
-| 文档与检索     | BGE 中文嵌入、BM25、RRF、结构感知切分                 |
+| 文档与检索     | RapidOCR、PDFium、BGE 中文嵌入、BM25、RRF、结构感知切分 |
 | 模型接入       | DeepSeek、OpenAI-compatible API、结构化输出、引用校验 |
 | 前端与部署     | ES Modules、CSS、Docker Compose、GitHub Actions       |
 
@@ -31,9 +33,12 @@
 
 ```mermaid
 flowchart LR
-    A[上传文档] --> B[校验与结构切分]
-    B --> C[持久作业队列]
-    C --> D[Worker 构建索引]
+    A[上传文档] --> C[持久作业队列]
+    C --> B[原生解析 / OCR / 可选视觉转录]
+    B --> Q{需要复核?}
+    Q -->|是| H[原图对照与人工修订]
+    Q -->|否| D[Worker 构建索引]
+    H --> D
     D --> E[激活文档版本]
     U[提交问题] --> P[租户与部门授权过滤]
     E --> P
@@ -102,6 +107,26 @@ API 处理认证、上传和问答请求，Worker 独立执行文档索引。版
 
 <img src="docs/screenshots/mobile.png" alt="知识问答移动端" width="390">
 
+### 10. 扫描件解析复核
+
+左侧查看原始页面，右侧修订 OCR 文字和表格；空白页需明确确认，复核提交前新版本不会进入检索。
+
+![扫描件原图对照与解析复核](docs/screenshots/ocr-review.png)
+
+### 11. 复核后入库
+
+确认稿异步构建索引，完成后切换有效版本。
+
+![复核后知识资产状态](docs/screenshots/ocr-ready.png)
+
+### 12. 扫描件问答与来源页
+
+回答引用复核后的文字和表格，点击来源可查看原始 PDF 页面。
+
+![扫描件真实模型问答](docs/screenshots/ocr-answer.png)
+
+![引用对应的PDF原始页面](docs/screenshots/ocr-source.png)
+
 ## 本地运行
 
 准备 Docker、Docker Compose 和模型服务，复制 .env.example 为 .env，配置数据库密码以及模型 API 地址、名称和密钥。
@@ -116,7 +141,7 @@ docker compose exec api python -m scripts.bootstrap
 ## 自动化测试
 
 ```bash
-pip install ".[dev]"
+pip install ".[dev,ocr]"
 APP_ENV=test pytest -q
 npm test
 ```
@@ -124,6 +149,8 @@ npm test
 配置 `TEST_DATABASE_URL` 可运行 PostgreSQL 集成测试。GitHub Actions 执行测试、数据库迁移、镜像构建及 API/Worker 就绪检查。
 
 本地已使用真实 DeepSeek 验证文档索引、问答引用、连续追问、历史保存、拒答和版本更新。运行截图使用验收资料，记录见 [本地验收结果](docs/local-acceptance.json)。可使用 `python -m scripts.acceptance --help` 查看真实模型验收参数。
+
+新增扫描件链路的 [浏览器验收记录](docs/ocr-browser-acceptance.json) 与 [分层评测说明](docs/quality-and-evaluation.md) 分别记录解析、检索、引用契约和人工评分口径。36 条合成回归集在各检索方案上结果持平，暂不宣称召回提升；真实模型小样本检查也不等同于业务准确率。
 
 ## 在线访问
 

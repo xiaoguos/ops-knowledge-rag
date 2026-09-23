@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-09-23T08:06:00.231551+00:00",
+  "data": "synthetic scanned PDF",
+  "database": "isolated local SQLite",
+  "model": "deepseek-flash",
+  "checks": {
+    "upload": true,
+    "real_ocr": true,
+    "table_candidate": true,
+    "browser_review": true,
+    "review_then_index": true,
+    "real_bge": true,
+    "real_model_answer": true,
+    "original_page": true,
+    "followup": true,
+    "history": true,
+    "mobile_no_overflow": true
+  },
+  "query_plan": {
+    "original": "PAY_TIMEOUT出现时先做什么？请求超时配置是多少？",
+    "resolved": "PAY_TIMEOUT出现时先做什么？请求超时配置是多少？",
+    "method": "model",
+    "warning": "",
+    "memory": {
+      "recent_questions": [],
+      "topic_summary": ""
+    }
+  },
+  "answer": {
+    "claims": [
+      {
+        "text": "发生PAY_TIMEOUT时先查询订单状态。",
+        "citation_id": "ef6e31448d684e82ac940407192f7d8a",
+        "quote": "发生PAY_TIMEOUT时先查询订单状态。"
+      },
+      {
+        "text": "请求超时配置为3000毫秒。",
+        "citation_id": "ef6e31448d684e82ac940407192f7d8a",
+        "quote": "| 请求超时 | 3000毫秒 |"
+      }
+    ],
+    "refused": false,
+    "evidence": [
+      {
+        "id": "ef6e31448d684e82ac940407192f7d8a",
+        "document_id": "a93a6949cc804f20a0a96632a77b285f",
+        "version_id": "ccd88da8ab694394b2cbbc022422c608",
+        "title": "scan-fixture.pdf",
+        "department": "运维",
+        "version": "扫描复核版1.0",
+        "heading": "支付网关运维手册",
+        "page": 1,
+        "text": "本文件是合成验收资料，不包含真实业务数据。\n\n发生PAY_TIMEOUT时先查询订单状态。\n\n禁止未核对交易状态直接重试扣款。\n\n重试必须复用原幂等键。\n\n告警阈值为连续45次。\n\n| 参数 | 配置值 |\n| --- | --- |\n| 请求超时 | 3000毫秒 |\n| 连接池 | 30个连接 |",
+        "matched_text": "本文件是合成验收资料，不包含真实业务数据。\n\n发生PAY_TIMEOUT时先查询订单状态。\n\n禁止未核对交易状态直接重试扣款。\n\n重试必须复用原幂等键。\n\n告警阈值为连续45次。\n\n| 参数 | 配置值 |\n| --- | --- |\n| 请求超时 | 3000毫秒 |\n| 连接池 | 30个连接 |"
+      }
+    ],
+    "answer": "发生PAY_TIMEOUT时先查询订单状态。 [ef6e31448d684e82ac940407192f7d8a]\n\n请求超时配置为3000毫秒。 [ef6e31448d684e82ac940407192f7d8a]",
+    "latency_ms": 9602.5,
+    "embedding": "fastembed:BAAI/bge-small-zh-v1.5",
+    "retrieval_plan": {
+      "original": "PAY_TIMEOUT出现时先做什么？请求超时配置是多少？",
+      "resolved": "PAY_TIMEOUT出现时先做什么？请求超时配置是多少？",
+      "method": "model",
+      "warning": "",
+      "memory": {
+        "recent_questions": [],
+        "topic_summary": ""
+      }
+    },
+    "conversation_id": "a20a9940b7c74ab7be2cbcc64920da87"
+  },
+  "javascript_errors": [],
+  "screenshots": {
+    "ocr-review.png": "ff939504cb7ef815d82ee6cd740bae4859de287f0c5ccba5fb1633a91ae1a27e",
+    "ocr-ready.png": "4350a6cb411fd2e3e1a96533a0f81ff9d07fcccf8d38555c30583a9a97095250",
+    "ocr-answer.png": "792adbd952228f0e91c599d5a4849e6a2d54461e45bb3216499fb354163fa50f",
+    "ocr-source.png": "3dc2546bc47f097af883f1375ede95d7f7786f1151b9ede6a0c332fb1a0438da"
+  }
+}

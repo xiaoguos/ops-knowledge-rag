@@ -166,6 +166,25 @@ def test_stale_index_cannot_activate_and_delete_blocks_reindex(environment):
         ).json()["refused"]
 
 
+def test_revoked_department_history_is_not_used_for_query_memory(environment):
+    app = create_app(environment, TestEmbedder(), generator)
+    with TestClient(app) as client:
+        admin = headers(client)
+        member = add_user(client, admin, "memory@example.test", "member", ["ops"])
+        login = headers(client, "memory@example.test")
+        upload(client, admin)
+        app.state.handle_job(environment.claim())
+        first = client.post("/api/ask", headers=login, json={"query": "ops阈值是多少"}).json()
+        response = client.put("/api/users/" + member["id"], headers=admin,
+                              json={"active": True, "role": "member", "departments": ["sales"]})
+        assert response.status_code == 200
+        login = headers(client, "memory@example.test")
+        follow = client.post("/api/ask", headers=login,
+                            json={"query": "那么它呢", "conversation_id": first["conversation_id"]}).json()
+        assert follow["retrieval_plan"]["memory"]["recent_questions"] == []
+        assert follow["refused"] and follow["evidence"] == []
+
+
 def test_failed_update_preserves_active_version(environment):
     embedder = TestEmbedder()
     app = create_app(environment, embedder, generator)

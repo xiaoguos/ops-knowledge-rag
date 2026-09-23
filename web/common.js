@@ -33,6 +33,7 @@ const labels = {
   succeeded: "已完成",
   failed: "处理失败",
   awaiting_approval: "待审核",
+  awaiting_review: "待解析复核",
   publishing: "发布中",
   notification_queued: "待发布",
   notification_running: "发布中",
@@ -84,7 +85,7 @@ let token = "",
   localTestLogin = null,
   publicTrialLogin = null;
 export const currentUser = () => user;
-export async function api(path, options = {}) {
+export async function api(path, { responseType, ...options } = {}) {
   const headers = { ...options.headers };
   if (token) headers.Authorization = "Bearer " + token;
   if (options.body && !(options.body instanceof FormData))
@@ -103,6 +104,7 @@ export async function api(path, options = {}) {
         : "服务暂时无法连接，请稍后重试。",
     );
   }
+  if (response.ok && responseType === "blob") return response.blob();
   let body;
   try {
     body = await response.json();

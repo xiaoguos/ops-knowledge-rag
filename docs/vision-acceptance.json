@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-09-23T08:02:36.158256+00:00",
+  "fixture": "synthetic image-only PDF",
+  "ocr_layout": {
+    "table_candidates": 1,
+    "ambiguous_columns": false
+  },
+  "ocr_markdown": "支付网关运维手册\n本文件是合成验收资料，不包含真实业务数据。\n发生PAY_TIMEOUT 时先查询订单状态。\n禁止未核对交易状态直接重试扣款。\n重试必须复用原幂等键。\n告警阈值为连续45次。\n| 参数 | 配置值 |\n| --- | --- |\n| 请求超时 | 3000毫秒 |\n| 连接池 | 30个连接 |\n来源页码：第1页",
+  "model": "deepseek-flash",
+  "vision": {
+    "status": "completed",
+    "text": "# 支付网关运维手册\n\n本文件是合成验收资料，不包含真实业务数据。\n\n发生 PAY_TIMEOUT 时先查询订单状态。\n\n禁止未核对交易状态直接重试扣款。\n\n重试必须复用原幂等键。\n\n告警阈值为连续45次。\n\n| 参数 | 配置值 |\n| ---- | ---- |\n| 请求超时 | 3000毫秒 |\n| 连接池 | 30个连接 |\n\n来源页码：第1页",
+    "expected_facts_present": true
+  },
+  "query_plan": {
+    "original": "它出现PAY_TIMEOUT一直转圈怎么办？",
+    "resolved": "支付接口出现 PAY_TIMEOUT 一直转圈怎么办？",
+    "method": "model",
+    "warning": "",
+    "memory": {
+      "recent_questions": [
+        "支付接口怎么处理超时？"
+      ],
+      "topic_summary": ""
+    }
+  }
+}

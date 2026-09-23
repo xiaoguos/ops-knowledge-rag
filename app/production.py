@@ -7,9 +7,12 @@ from zipfile import ZipFile
 from pathlib import Path
 import httpx
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi.responses import Response
 from pydantic import BaseModel, Field
 from sqlalchemy import delete, func, select
-from .documents import parse_file
+from .documents import Section
+from .ingestion import process_document, render_page, report_digest, reviewed_report
+from .query_planning import memory_layers, plan_query, parent_contexts
 from .models import Chunk, Conversation, Document, DocumentVersion, Message
 from .platform import Job, User, iso_time
 from .retrieval import Embedder, bm25, rank, rrf, tokens
@@ -20,6 +23,7 @@ class Knowledge:
         self.platform = platform
         self.embedder = embedder or Embedder("fastembed", "BAAI/bge-small-zh-v1.5")
         self.generator = generator or self.generate
+        self.allow_model_rewrite = generator is None
 
     def allowed(self, user, department):
         return user.role == "admin" or department in user.departments
@@ -29,8 +33,21 @@ class Knowledge:
             version = db.get(DocumentVersion, job.payload["version_id"])
             if not version:
                 raise ValueError("Document version not found")
-            payload, filename = version.payload, version.filename
-        sections = parse_file(filename, payload)
+            payload, filename, processing = version.payload, version.filename, version.processing
+        processing = processing if processing.get("reviewed") else process_document(filename, payload)
+        if processing["review_required"]:
+            with self.platform.transaction() as db:
+                self.platform.fenced(db, job)
+                version = db.get(DocumentVersion, job.payload["version_id"])
+                document = db.scalar(select(Document).where(Document.id == version.document_id).with_for_update())
+                if document.deleted or document.revision != version.revision:
+                    version.state = "superseded"
+                else:
+                    version.processing = processing
+                    version.state = "awaiting_review"
+                self.platform.finish(db, job)
+            return
+        sections = [Section(**section) for section in processing["sections"]]
         if not sections:
             raise ValueError("文档没有可提取文本；扫描 PDF 请先 OCR")
         if len(sections) > 2000:
@@ -55,7 +72,7 @@ class Knowledge:
                 self.platform.finish(db, job)
                 return
             db.execute(delete(Chunk).where(Chunk.version_id == version.id))
-            for section, vector in zip(sections, vectors):
+            for section, vector, parent in zip(sections, vectors, parent_contexts(sections)):
                 lexical = " ".join(tokens(section.heading + " " + section.text))
                 value = (
                     func.to_tsvector("simple", lexical)
@@ -67,6 +84,7 @@ class Knowledge:
                         version_id=version.id,
                         heading=section.heading,
                         text=section.text,
+                        parent_text=parent,
                         page=section.page,
                         embedding=vector,
                         lexical=value,
@@ -75,9 +93,12 @@ class Knowledge:
             document.active_version = version.id
             version.state = "ready"
             version.embedding_model = self.embedder.fingerprint
+            version.processing = processing
             self.platform.finish(db, job)
 
-    def search(self, user, query, department=None, version_label=None):
+    def search(self, user, query, department=None, version_label=None, *, strategy="hybrid", k=8, original=None, expand_parent=True):
+        if strategy not in {"hybrid", "vector", "bm25"} or not 1 <= k <= 20:
+            raise ValueError("检索策略或k无效")
         if department and not self.allowed(user, department):
             raise HTTPException(403, "无权检索该部门")
         filters = [
@@ -97,14 +118,13 @@ class Knowledge:
             .join(Document, DocumentVersion.document_id == Document.id)
             .where(*filters)
         )
-        q = self.embedder.embed([query], query=True)[0]
+        queries = list(dict.fromkeys([original or query, query]))
+        vectors = self.embedder.embed(queries, query=True) if strategy != "bm25" else []
         with self.platform.Session() as db:
+            dense_lists = []
             if self.platform.engine.dialect.name == "postgresql":
-                dense = list(
-                    db.execute(
-                        base.order_by(Chunk.embedding.cosine_distance(q)).limit(40)
-                    )
-                )
+                for q in vectors:
+                    dense_lists.append(list(db.execute(base.order_by(Chunk.embedding.cosine_distance(q)).limit(40))))
                 tsq = func.websearch_to_tsquery("simple", " OR ".join(tokens(query)))
                 lexical = list(
                     db.execute(
@@ -117,33 +137,48 @@ class Knowledge:
                 from .retrieval import cosine
 
                 all_rows = list(db.execute(base))
-                scores = cosine(q, [row[0].embedding for row in all_rows])
-                dense = [all_rows[i] for i in rank(scores, 40)]
+                for q in vectors:
+                    scores = cosine(q, [row[0].embedding for row in all_rows])
+                    dense_lists.append([all_rows[i] for i in rank(scores, 40)])
                 lexical = all_rows
+            dense = [row for route in dense_lists for row in route]
+            if strategy == "vector":
+                lexical = []
             candidates = {row[0].id: row for row in dense + lexical}
             ids = list(candidates)
             scores = bm25(
                 query,
                 [candidates[i][0].heading + "\n" + candidates[i][0].text for i in ids],
             )
-            ranking, _ = rrf(
-                [[ids.index(row[0].id) for row in dense], rank(scores, 40)]
-            )
+            routes = [[ids.index(row[0].id) for row in route] for route in dense_lists]
+            if strategy != "vector":
+                routes.append(rank(scores, 40))
+            ranking, _ = rrf(routes)
             result = []
-            for i in ranking[:8]:
+            seen_parents = set()
+            for i in ranking:
                 chunk, version = candidates[ids[i]]
+                text = chunk.parent_text if expand_parent and chunk.parent_text else chunk.text
+                parent_key = (version.id, chunk.heading, chunk.page, text)
+                if parent_key in seen_parents:
+                    continue
+                seen_parents.add(parent_key)
                 result.append(
                     {
                         "id": chunk.id,
                         "document_id": version.document_id,
+                        "version_id": version.id,
                         "title": version.filename,
                         "department": version.department,
                         "version": version.version,
                         "heading": chunk.heading,
                         "page": chunk.page,
-                        "text": chunk.text,
+                        "text": text,
+                        "matched_text": chunk.text,
                     }
                 )
+                if len(result) >= k:
+                    break
             return result
 
     def generate(self, question, evidence, history):
@@ -254,9 +289,82 @@ class Knowledge:
                         else v.state,
                         "searchable": bool(d.active_version),
                         "updated_at": iso_time(v.created_at),
+                        "review_required": v.state == "awaiting_review",
                     }
                     for d, v in rows
                 ]
+
+        def document_version(db, document_id, user):
+            document = db.scalar(select(Document).where(
+                Document.id == document_id, Document.tenant == user.tenant,
+                Document.deleted.is_(False)).with_for_update())
+            if not document:
+                raise HTTPException(404, "文档不存在")
+            version = db.scalar(select(DocumentVersion).where(
+                DocumentVersion.document_id == document.id,
+                DocumentVersion.revision == document.revision))
+            return document, version
+
+        @router.get("/documents/{document_id}/processing")
+        def processing_report(document_id: str, user: User = Depends(admin)):
+            with self.platform.transaction() as db:
+                document, version = document_version(db, document_id, user)
+                return {"document_id": document.id, "version_id": version.id,
+                        "state": version.state, "digest": report_digest(version.processing),
+                        "report": version.processing}
+
+        class ReviewedPage(BaseModel):
+            page: int = Field(ge=1, le=60)
+            text: str = Field(max_length=32000)
+            blank: bool = False
+
+        class ReviewInput(BaseModel):
+            version_id: str = Field(min_length=32, max_length=32)
+            digest: str = Field(min_length=64, max_length=64)
+            pages: list[ReviewedPage] = Field(min_length=1, max_length=60)
+
+        @router.post("/documents/{document_id}/review", status_code=202)
+        def review(document_id: str, data: ReviewInput, user: User = Depends(admin)):
+            with self.platform.transaction() as db:
+                document, version = document_version(db, document_id, user)
+                if (version.id != data.version_id or version.state != "awaiting_review"
+                        or report_digest(version.processing) != data.digest):
+                    raise HTTPException(409, "版本或复核状态已变化，请刷新后重试")
+                try:
+                    report = reviewed_report(version.processing, [p.model_dump() for p in data.pages])
+                except ValueError as error:
+                    raise HTTPException(422, str(error)) from error
+                if len(report["sections"]) > 2000 or any(len(s["text"]) > 16000 for s in report["sections"]):
+                    raise HTTPException(422, "切片数量或结构块过大，请拆分")
+                version.processing = report
+                version.state = "pending"
+                job = Job(tenant=user.tenant, owner_id=user.id, kind="index", payload={"version_id": version.id})
+                db.add(job)
+                db.flush()
+                self.platform.audit(db, user, "document.review", document.id,
+                                    {"version_id": version.id, "review_digest": report_digest(report)})
+                return {"job_id": job.id}
+
+        @router.get("/documents/{document_id}/versions/{version_id}/pages/{page_number}")
+        def source_page(document_id: str, version_id: str, page_number: int, user: User = Depends(authorized)):
+            with self.platform.Session() as db:
+                row = db.execute(select(Document, DocumentVersion).join(
+                    DocumentVersion, DocumentVersion.document_id == Document.id).where(
+                    Document.id == document_id, Document.tenant == user.tenant,
+                    Document.deleted.is_(False), DocumentVersion.id == version_id)).first()
+                if not row or not self.allowed(user, row[1].department):
+                    raise HTTPException(404, "来源不可见")
+                document, version = row
+                if user.role != "admin" and document.active_version != version.id:
+                    raise HTTPException(404, "来源版本已失效")
+                if not version.filename.lower().endswith(".pdf"):
+                    raise HTTPException(422, "此来源不是PDF")
+                payload = version.payload
+            try:
+                png = render_page(payload, page_number)
+            except (ValueError, IndexError) as error:
+                raise HTTPException(422, "页码或PDF内容无效") from error
+            return Response(png, media_type="image/png", headers={"Cache-Control": "no-store"})
 
         @router.post("/documents", status_code=202)
         def upload(
@@ -482,18 +590,16 @@ class Knowledge:
                             select(Message)
                             .where(Message.conversation_id == row.id)
                             .order_by(Message.created_at.desc())
-                            .limit(3)
+                            .limit(12)
                         ).all()
+                        if all(self.allowed(user, e["department"]) for e in m.response.get("evidence", []))
                     ][::-1]
-            query = data.query
-            if history and any(
-                term in query for term in ["这个", "它", "上述", "那么"]
-            ):
-                query = history[-1][:300] + "\n" + query
+            query_plan = plan_query(data.query, memory_layers(history), self.allow_model_rewrite)
+            query = query_plan["resolved"]
             try:
-                evidence = self.search(user, query, data.department, data.version)
+                evidence = self.search(user, query, data.department, data.version, original=data.query)
                 generated = (
-                    self.generator(data.query, evidence, history)
+                    self.generator(data.query, evidence, query_plan["memory"])
                     if evidence
                     else {"claims": [], "refused": True}
                 )
@@ -512,6 +618,7 @@ class Knowledge:
                 ),
                 "latency_ms": round((time.perf_counter() - started) * 1000, 1),
                 "embedding": self.embedder.fingerprint,
+                "retrieval_plan": query_plan,
             }
             with self.platform.transaction() as db:
                 conversation_id = data.conversation_id

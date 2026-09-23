@@ -24,7 +24,7 @@ def parse_file(name: str, payload: bytes) -> list[Section]:
                 section.page = page_number
                 sections.append(section)
         if not sections:
-            raise ValueError("PDF 无可提取文本；扫描件需先 OCR，本项目不内置 OCR")
+            raise ValueError("PDF 无可提取文本；扫描件请使用文档上传的OCR与复核流程")
         return sections
     if suffix == "docx":
         from docx import Document
@@ -66,8 +66,12 @@ def split_markdown(text: str, limit=700) -> list[Section]:
             output.append(Section(heading, "\n\n".join(buffer).strip()))
             buffer = []
 
-    def append(block):
+    def append(block, atomic_block=False):
         if not block.strip():
+            return
+        if not atomic_block and len(block) > limit:
+            for start in range(0, len(block), limit):
+                append(block[start:start + limit])
             return
         if sum(len(x) for x in buffer) + len(block) > limit:
             flush()
@@ -78,14 +82,14 @@ def split_markdown(text: str, limit=700) -> list[Section]:
             atomic.append(line)
             fenced = not fenced
             if not fenced:
-                append("\n".join(atomic))
+                append("\n".join(atomic), atomic_block=True)
                 atomic = []
             continue
         if fenced:
             atomic.append(line)
             continue
         if atomic and not line.lstrip().startswith("|"):
-            append("\n".join(atomic))
+            append("\n".join(atomic), atomic_block=True)
             atomic = []
         if line.lstrip().startswith("|"):
             atomic.append(line)
@@ -97,6 +101,6 @@ def split_markdown(text: str, limit=700) -> list[Section]:
         elif line.strip():
             append(line)
     if atomic:
-        append("\n".join(atomic))
+        append("\n".join(atomic), atomic_block=True)
     flush()
     return output

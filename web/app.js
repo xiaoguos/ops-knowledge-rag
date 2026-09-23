@@ -17,6 +17,27 @@ import {
 } from "./common.js";
 let conversationId = null;
 let workspaceUserId = null;
+
+document.addEventListener("click", async (event) => {
+  const button = event.target.closest(".source-page");
+  if (!button) return;
+  button.disabled = true;
+  const identity = currentUser()?.id;
+  try {
+    const blob = await api(button.dataset.path, { responseType: "blob" });
+    if (!button.isConnected || currentUser()?.id !== identity) return;
+    const img = new Image();
+    const url = URL.createObjectURL(blob);
+    img.alt = "引用对应的PDF原始页面";
+    img.style.cssText = "max-width:100%;height:auto";
+    img.onload = img.onerror = () => URL.revokeObjectURL(url);
+    img.src = url;
+    button.replaceWith(img);
+  } catch (error) {
+    button.textContent = error.message;
+    button.disabled = false;
+  }
+});
 document.addEventListener("click", (event) => {
   const citation = event.target.closest(".citation-link");
   if (!citation) return;
@@ -87,6 +108,7 @@ async function documents() {
         ...(admin
           ? [
               '<div class="actions" style="margin:0">' +
+                (r.review_required ? '<button class="btn small review-document" data-id="' + r.id + '">解析复核</button>' : "") +
                 (r.status === "failed"
                   ? '<button class="btn small retry" data-id="' +
                     r.id +
@@ -99,6 +121,7 @@ async function documents() {
           : []),
       ]),
     );
+    on(".review-document", async (el) => reviewDocument(el.dataset.id));
     on(".retry", async (el) => {
       await post("/documents/" + el.dataset.id + "/retry", {});
       await documents();
@@ -123,6 +146,55 @@ async function documents() {
     await documents();
   });
 }
+async function reviewDocument(id) {
+  const identity = currentUser()?.id;
+  const data = await api("/documents/" + id + "/processing");
+  if (currentUser()?.id !== identity) return;
+  const pages = data.report.pages || [];
+  if (data.state !== "awaiting_review" || !pages.length) {
+    await documents();
+    return;
+  }
+  let index = 0;
+  const edits = pages.map((p) => ({ page: p.page, text: p.text, blank: false }));
+  $("#view").innerHTML = head("DOCUMENT REVIEW", "解析质量复核", "逐页对照原图修订；提交后才构建新索引，旧有效版本不受影响。") +
+    '<div class="card"><div class="actions"><button class="btn" id="review-back">返回文档</button><button class="btn" id="review-prev">上一页</button><span id="review-position"></span><button class="btn" id="review-next">下一页</button></div><div id="review-warning" class="notice warning"></div><div class="grid2"><div><h2>原始页面</h2><div id="source-preview"></div></div><div><label for="review-text">确认后的正文 / Markdown表格</label><textarea id="review-text" maxlength="32000" style="min-height:420px"></textarea><label><input id="review-blank" type="checkbox">确认此页没有需入库的内容</label></div></div><div class="actions"><button id="review-submit" class="btn primary">确认全部页面并提交索引</button><span class="muted">机器识别分数不等于事实正确率；无法核验的资料请勿提交。</span></div></div>';
+  const seen = new Set();
+  const preview = $("#source-preview");
+  function save() {
+    edits[index].text = $("#review-text").value;
+    edits[index].blank = $("#review-blank").checked;
+  }
+  async function show() {
+    const number = index;
+    seen.add(number);
+    $("#review-position").textContent = `第 ${number + 1} / ${pages.length} 页`;
+    $("#review-warning").textContent = `${pages[number].method}：${pages[number].warnings.join("；") || "请核对文字和顺序"}`;
+    $("#review-text").value = edits[number].text;
+    $("#review-blank").checked = edits[number].blank;
+    $("#source-preview").innerHTML = empty("正在加载授权页面");
+    const blob = await api(`/documents/${id}/versions/${data.version_id}/pages/${pages[number].page}`, { responseType: "blob" });
+    if (!preview.isConnected || currentUser()?.id !== identity || index !== number) return;
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.alt = `原始PDF第${pages[number].page}页`;
+    img.style.cssText = "max-width:100%;height:auto";
+    img.onload = img.onerror = () => URL.revokeObjectURL(url);
+    img.src = url;
+    preview.replaceChildren(img);
+  }
+  on("#review-back", documents);
+  on("#review-prev", async () => { save(); index = Math.max(0, index - 1); await show(); });
+  on("#review-next", async () => { save(); index = Math.min(pages.length - 1, index + 1); await show(); });
+  on("#review-submit", async () => {
+    save();
+    if (seen.size !== pages.length) throw new Error("请查看并核对全部页面后提交");
+    await post(`/documents/${id}/review`, { version_id: data.version_id, digest: data.digest, pages: edits });
+    await documents();
+  });
+  await show();
+}
+
 function renderAnswer(answer) {
   return (
     '<div class="notice ' +
@@ -170,7 +242,9 @@ function renderEvidence(evidence) {
             " · " +
             esc(e.heading) +
             (e.page ? " · 第 " + e.page + " 页" : "") +
-            "</p><pre>" +
+            "</p>" +
+            (e.page && e.version_id ? '<button class="btn small source-page" data-path="/documents/' + esc(e.document_id) + '/versions/' + esc(e.version_id) + '/pages/' + e.page + '">查看原始页</button>' : "") +
+            "<pre>" +
             esc(e.text) +
             '</pre><p class="muted">引用 ID：' +
             esc(e.id) +

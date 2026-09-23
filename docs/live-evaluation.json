@@ -1,0 +1,1172 @@
+{
+  "generated_at": "2026-09-23T08:09:19.657360+00:00",
+  "scope": "人工编写的合成回归集；用于当前Knowledge入口，不是独立企业用户测试集。",
+  "entrypoint": "app.production.Knowledge",
+  "database": "isolated SQLite; not a PostgreSQL load test",
+  "embedding": "fastembed:BAAI/bge-small-zh-v1.5",
+  "generation": "live",
+  "case_count": 8,
+  "dataset_sha256": "3376d952c9547569ac8b0366062a68d94fbfc64788cffadfa29eeb1646dabf26",
+  "metric_unit": "unique gold document coverage among the first 5 evidence items; unanswerable excluded from recall",
+  "summary": [
+    {
+      "strategy": "bm25",
+      "cases": 8,
+      "answerable_cases": 5,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 1,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 7.6275
+    },
+    {
+      "strategy": "vector",
+      "cases": 8,
+      "answerable_cases": 5,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 1,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 10.42
+    },
+    {
+      "strategy": "hybrid",
+      "cases": 8,
+      "answerable_cases": 5,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 1,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 11.6463
+    },
+    {
+      "strategy": "hybrid_expanded",
+      "cases": 8,
+      "answerable_cases": 5,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 1,
+      "permission_pass_rate": 1,
+      "generation_attempts": 8,
+      "generation_errors": 0,
+      "refusal_match_rate": 1,
+      "citation_contract_pass_rate": 1,
+      "mean_retrieval_ms": 11.35
+    }
+  ],
+  "human_semantic_pass_rate": null,
+  "details": [
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "auth-token",
+        "api-rate-v2",
+        "payment-timeout",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 7.69,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "mysql-pool",
+        "auth-token",
+        "incident-severity",
+        "api-rate-v1"
+      ],
+      "retrieval_ms": 12.03,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "mysql-pool",
+        "api-rate-v1",
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 12.44,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "mysql-pool",
+        "api-rate-v1",
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 9.79,
+      "permission_pass": true,
+      "claims": [
+        {
+          "text": "支付网关请求超时上限为 3000 毫秒。",
+          "citation_id": "eb7a05f322d746e89f05ce0558cc5878",
+          "quote": "支付网关请求超时上限为 3000 毫秒。"
+        }
+      ],
+      "refused": false,
+      "refusal_match": true,
+      "citation_contract_pass": true,
+      "evidence": [
+        {
+          "id": "eb7a05f322d746e89f05ce0558cc5878",
+          "document_id": "3d79983508f247eb923d81acd7e7410e",
+          "version_id": "ac848704333a4c5698d5cc998653e667",
+          "title": "支付网关超时排查.md",
+          "department": "运维",
+          "version": "2.1",
+          "heading": "PAY_TIMEOUT 排查",
+          "page": null,
+          "text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。",
+          "matched_text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。"
+        },
+        {
+          "id": "1fdb7fad93ad4ec09587b7296513d9b2",
+          "document_id": "1345622f8ceb4c179c7d38a59f3e1545",
+          "version_id": "b201849db6094b6795017fd0f9efa346",
+          "title": "MySQL 连接池耗尽.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "DB_POOL_EXHAUSTED",
+          "page": null,
+          "text": "出现 DB_POOL_EXHAUSTED 时检查活跃连接数、慢查询和未提交事务。应用连接池最大连接数为 30，获取连接超时为 2000 毫秒。优先定位连接泄漏，禁止仅靠增加连接数缓解。",
+          "matched_text": "出现 DB_POOL_EXHAUSTED 时检查活跃连接数、慢查询和未提交事务。应用连接池最大连接数为 30，获取连接超时为 2000 毫秒。优先定位连接泄漏，禁止仅靠增加连接数缓解。"
+        },
+        {
+          "id": "53ec73df61b740efba138b989b631691",
+          "document_id": "e552cb246a1744caa97b344b749ca88d",
+          "version_id": "db678ac484a3479e8287f1aff38299e7",
+          "title": "接口限流配置旧版.md",
+          "department": "研发",
+          "version": "1.0",
+          "heading": "订单接口限流 v1.0",
+          "page": null,
+          "text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 50 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 1.0 版本。",
+          "matched_text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 50 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 1.0 版本。"
+        },
+        {
+          "id": "8439aebe5b7f499d88b92cd0fa2e139a",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "限流策略表",
+          "page": null,
+          "text": "| 接口 | 每租户每秒请求数 | 版本 |\n| GET /api/orders | 100 | 2.0 |\n| POST /api/orders | 20 | 2.0 |",
+          "matched_text": "| 接口 | 每租户每秒请求数 | 版本 |\n| GET /api/orders | 100 | 2.0 |\n| POST /api/orders | 20 | 2.0 |"
+        },
+        {
+          "id": "bcc3f4229f194d03bf7cd154ecb78d25",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "订单接口限流 v2.0",
+          "page": null,
+          "text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。",
+          "matched_text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 4466.32
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory"
+      ],
+      "retrieval_ms": 9.37,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "incident-severity",
+        "k8s-probe",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 13.3,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "incident-severity",
+        "k8s-probe",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 12.01,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "redis-memory",
+        "webhook",
+        "api-rate-v1",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 15.38,
+      "permission_pass": true,
+      "claims": [
+        {
+          "text": "Redis used_memory 超过 maxmemory 的 85% 持续 5 分钟触发告警。",
+          "citation_id": "55e949d9b4604d43941d7a3149d6156a",
+          "quote": "Redis used_memory 超过 maxmemory 的 85% 持续 5 分钟触发告警。"
+        },
+        {
+          "text": "告警后应先检查大键和过期时间分布。",
+          "citation_id": "55e949d9b4604d43941d7a3149d6156a",
+          "quote": "先检查大键和过期时间分布。"
+        }
+      ],
+      "refused": false,
+      "refusal_match": true,
+      "citation_contract_pass": true,
+      "evidence": [
+        {
+          "id": "55e949d9b4604d43941d7a3149d6156a",
+          "document_id": "65a7d76fe686482fa742f2c28b498bd2",
+          "version_id": "94d0f0ce29824e4cbc200596da6b8795",
+          "title": "Redis 内存与淘汰策略.md",
+          "department": "运维",
+          "version": "1.2",
+          "heading": "Redis 内存告警",
+          "page": null,
+          "text": "Redis used_memory 超过 maxmemory 的 85% 持续 5 分钟触发告警。先检查大键和过期时间分布。缓存实例使用 allkeys-lru 淘汰策略；会话实例禁止混用缓存实例。",
+          "matched_text": "Redis used_memory 超过 maxmemory 的 85% 持续 5 分钟触发告警。先检查大键和过期时间分布。缓存实例使用 allkeys-lru 淘汰策略；会话实例禁止混用缓存实例。"
+        },
+        {
+          "id": "24129263369e4d5ebae3b8ae0cc0c80d",
+          "document_id": "65a7d76fe686482fa742f2c28b498bd2",
+          "version_id": "94d0f0ce29824e4cbc200596da6b8795",
+          "title": "Redis 内存与淘汰策略.md",
+          "department": "运维",
+          "version": "1.2",
+          "heading": "安全排查命令",
+          "page": null,
+          "text": "线上排查使用 SCAN 分批遍历，禁止直接执行 KEYS *。\n\n```bash\nredis-cli --scan --pattern 'cache:*'\nredis-cli INFO memory\n```",
+          "matched_text": "线上排查使用 SCAN 分批遍历，禁止直接执行 KEYS *。\n\n```bash\nredis-cli --scan --pattern 'cache:*'\nredis-cli INFO memory\n```"
+        },
+        {
+          "id": "795886c776354ba68af50f2086121c2a",
+          "document_id": "61ea74d58e2e4689a9b72d85308ca458",
+          "version_id": "ba74eae5c51b435eb173879f3f14632d",
+          "title": "Webhook 通知重试.md",
+          "department": "研发",
+          "version": "1.0",
+          "heading": "通知幂等",
+          "page": null,
+          "text": "Webhook 通知使用 event_id 作为幂等键。消费端先检查事件是否处理过，重复事件返回成功但不重复执行副作用。",
+          "matched_text": "Webhook 通知使用 event_id 作为幂等键。消费端先检查事件是否处理过，重复事件返回成功但不重复执行副作用。"
+        },
+        {
+          "id": "53ec73df61b740efba138b989b631691",
+          "document_id": "e552cb246a1744caa97b344b749ca88d",
+          "version_id": "db678ac484a3479e8287f1aff38299e7",
+          "title": "接口限流配置旧版.md",
+          "department": "研发",
+          "version": "1.0",
+          "heading": "订单接口限流 v1.0",
+          "page": null,
+          "text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 50 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 1.0 版本。",
+          "matched_text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 50 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 1.0 版本。"
+        },
+        {
+          "id": "bcc3f4229f194d03bf7cd154ecb78d25",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "订单接口限流 v2.0",
+          "page": null,
+          "text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。",
+          "matched_text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 4557.35
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 3.65,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 5.02,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 7.64,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 6.29,
+      "permission_pass": true,
+      "claims": [
+        {
+          "text": "2.0版POST /api/orders每租户每秒限流20次。",
+          "citation_id": "8439aebe5b7f499d88b92cd0fa2e139a",
+          "quote": "| POST /api/orders | 20 | 2.0 |"
+        }
+      ],
+      "refused": false,
+      "refusal_match": true,
+      "citation_contract_pass": true,
+      "evidence": [
+        {
+          "id": "8439aebe5b7f499d88b92cd0fa2e139a",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "限流策略表",
+          "page": null,
+          "text": "| 接口 | 每租户每秒请求数 | 版本 |\n| GET /api/orders | 100 | 2.0 |\n| POST /api/orders | 20 | 2.0 |",
+          "matched_text": "| 接口 | 每租户每秒请求数 | 版本 |\n| GET /api/orders | 100 | 2.0 |\n| POST /api/orders | 20 | 2.0 |"
+        },
+        {
+          "id": "bcc3f4229f194d03bf7cd154ecb78d25",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "订单接口限流 v2.0",
+          "page": null,
+          "text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。",
+          "matched_text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。"
+        },
+        {
+          "id": "d0ce866286fc4713ae2c2e16dc6a8093",
+          "document_id": "4ca578fb62c54eea9a67a36f8dfff282",
+          "version_id": "c8df17798a624e0db802e3d52b71ccd3",
+          "title": "故障等级与响应.md",
+          "department": "运维",
+          "version": "2.0",
+          "heading": "故障分级",
+          "page": null,
+          "text": "P1 表示核心交易完全不可用，要求 5 分钟内响应。P2 表示部分用户受影响且存在降级路径，要求 15 分钟内响应。",
+          "matched_text": "P1 表示核心交易完全不可用，要求 5 分钟内响应。P2 表示部分用户受影响且存在降级路径，要求 15 分钟内响应。"
+        },
+        {
+          "id": "90088a8bfc944d25add1d100aa3f4361",
+          "document_id": "4ca578fb62c54eea9a67a36f8dfff282",
+          "version_id": "c8df17798a624e0db802e3d52b71ccd3",
+          "title": "故障等级与响应.md",
+          "department": "运维",
+          "version": "2.0",
+          "heading": "复盘要求",
+          "page": null,
+          "text": "P1 故障恢复后 48 小时内完成复盘，记录时间线、影响范围、直接原因、促成因素和后续改进负责人。复盘避免将根因简单归结为个人失误。",
+          "matched_text": "P1 故障恢复后 48 小时内完成复盘，记录时间线、影响范围、直接原因、促成因素和后续改进负责人。复盘避免将根因简单归结为个人失误。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 4296.48
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "backup",
+        "mysql-pool",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 11.54,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "backup",
+        "auth-token",
+        "redis-memory"
+      ],
+      "retrieval_ms": 10.88,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "backup",
+        "incident-severity",
+        "backup"
+      ],
+      "retrieval_ms": 12.08,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "backup",
+        "incident-severity",
+        "backup"
+      ],
+      "retrieval_ms": 10.93,
+      "permission_pass": true,
+      "claims": [
+        {
+          "text": "调试日志不能记录完整 Authorization 请求头。",
+          "citation_id": "f568661ce72c4bec9c5c80a72e287b62",
+          "quote": "应用日志不得记录完整 Authorization 请求头、访问令牌或数据库密码。"
+        },
+        {
+          "text": "调试时只记录请求编号和脱敏后的用户标识。",
+          "citation_id": "f568661ce72c4bec9c5c80a72e287b62",
+          "quote": "调试时只记录请求编号和脱敏后的用户标识。"
+        }
+      ],
+      "refused": false,
+      "refusal_match": true,
+      "citation_contract_pass": true,
+      "evidence": [
+        {
+          "id": "f568661ce72c4bec9c5c80a72e287b62",
+          "document_id": "7b481ac1f52c4262ba38a4096bcf1f2d",
+          "version_id": "17c6b1f43be44962b9aeb54307425144",
+          "title": "接口鉴权与令牌.md",
+          "department": "研发",
+          "version": "1.0",
+          "heading": "日志脱敏",
+          "page": null,
+          "text": "应用日志不得记录完整 Authorization 请求头、访问令牌或数据库密码。调试时只记录请求编号和脱敏后的用户标识。",
+          "matched_text": "应用日志不得记录完整 Authorization 请求头、访问令牌或数据库密码。调试时只记录请求编号和脱敏后的用户标识。"
+        },
+        {
+          "id": "3be9ae0b4d964853bad70d24284c1250",
+          "document_id": "1345622f8ceb4c179c7d38a59f3e1545",
+          "version_id": "b201849db6094b6795017fd0f9efa346",
+          "title": "MySQL 连接池耗尽.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "慢查询处理",
+          "page": null,
+          "text": "超过 1000 毫秒的 SQL 进入慢查询日志。先执行 EXPLAIN 检查执行计划，再分析索引选择；涉及生产索引变更需要审批。",
+          "matched_text": "超过 1000 毫秒的 SQL 进入慢查询日志。先执行 EXPLAIN 检查执行计划，再分析索引选择；涉及生产索引变更需要审批。"
+        },
+        {
+          "id": "386708c7ae594dea9330911b7aabcd59",
+          "document_id": "f593e30bbc7a4007ae0966e1e18c2f14",
+          "version_id": "c1ee3e399f5d433fbeaf2217c18897be",
+          "title": "数据库备份与恢复.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "数据库备份策略",
+          "page": null,
+          "text": "MySQL 每天凌晨 02:00 执行全量备份，保留最近 7 天备份；binlog 保留 14 天。备份完成必须校验文件完整性。",
+          "matched_text": "MySQL 每天凌晨 02:00 执行全量备份，保留最近 7 天备份；binlog 保留 14 天。备份完成必须校验文件完整性。"
+        },
+        {
+          "id": "90088a8bfc944d25add1d100aa3f4361",
+          "document_id": "4ca578fb62c54eea9a67a36f8dfff282",
+          "version_id": "c8df17798a624e0db802e3d52b71ccd3",
+          "title": "故障等级与响应.md",
+          "department": "运维",
+          "version": "2.0",
+          "heading": "复盘要求",
+          "page": null,
+          "text": "P1 故障恢复后 48 小时内完成复盘，记录时间线、影响范围、直接原因、促成因素和后续改进负责人。复盘避免将根因简单归结为个人失误。",
+          "matched_text": "P1 故障恢复后 48 小时内完成复盘，记录时间线、影响范围、直接原因、促成因素和后续改进负责人。复盘避免将根因简单归结为个人失误。"
+        },
+        {
+          "id": "545134db3bb9430f907bfa04a997ab68",
+          "document_id": "f593e30bbc7a4007ae0966e1e18c2f14",
+          "version_id": "c1ee3e399f5d433fbeaf2217c18897be",
+          "title": "数据库备份与恢复.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "恢复演练",
+          "page": null,
+          "text": "每月执行一次隔离环境恢复演练，验证数据可读性和业务查询。备份成功不等于恢复成功，演练结果写入恢复记录。",
+          "matched_text": "每月执行一次隔离环境恢复演练，验证数据可读性和业务查询。备份成功不等于恢复成功，演练结果写入恢复记录。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 5133.3
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 6.94,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "incident-severity"
+      ],
+      "retrieval_ms": 13.72,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "incident-severity"
+      ],
+      "retrieval_ms": 14.29,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "incident-severity"
+      ],
+      "retrieval_ms": 14.22,
+      "permission_pass": true,
+      "claims": [
+        {
+          "text": "支付重试使用 merchant_order_id 作为幂等键。",
+          "citation_id": "3301c115928b42e7844b74b516a53cdb",
+          "quote": "支付接口使用 merchant_order_id 作为幂等键。"
+        },
+        {
+          "text": "Webhook 通知使用 event_id 作为幂等键。",
+          "citation_id": "795886c776354ba68af50f2086121c2a",
+          "quote": "Webhook 通知使用 event_id 作为幂等键。"
+        }
+      ],
+      "refused": false,
+      "refusal_match": true,
+      "citation_contract_pass": true,
+      "evidence": [
+        {
+          "id": "3301c115928b42e7844b74b516a53cdb",
+          "document_id": "3d79983508f247eb923d81acd7e7410e",
+          "version_id": "ac848704333a4c5698d5cc998653e667",
+          "title": "支付网关超时排查.md",
+          "department": "运维",
+          "version": "2.1",
+          "heading": "幂等重试",
+          "page": null,
+          "text": "支付接口使用 merchant_order_id 作为幂等键。超时后先查询订单状态；仅当状态为 NOT_FOUND 时允许重新发起扣款，同一订单重试必须复用原幂等键。",
+          "matched_text": "支付接口使用 merchant_order_id 作为幂等键。超时后先查询订单状态；仅当状态为 NOT_FOUND 时允许重新发起扣款，同一订单重试必须复用原幂等键。"
+        },
+        {
+          "id": "795886c776354ba68af50f2086121c2a",
+          "document_id": "61ea74d58e2e4689a9b72d85308ca458",
+          "version_id": "ba74eae5c51b435eb173879f3f14632d",
+          "title": "Webhook 通知重试.md",
+          "department": "研发",
+          "version": "1.0",
+          "heading": "通知幂等",
+          "page": null,
+          "text": "Webhook 通知使用 event_id 作为幂等键。消费端先检查事件是否处理过，重复事件返回成功但不重复执行副作用。",
+          "matched_text": "Webhook 通知使用 event_id 作为幂等键。消费端先检查事件是否处理过，重复事件返回成功但不重复执行副作用。"
+        },
+        {
+          "id": "eb7a05f322d746e89f05ce0558cc5878",
+          "document_id": "3d79983508f247eb923d81acd7e7410e",
+          "version_id": "ac848704333a4c5698d5cc998653e667",
+          "title": "支付网关超时排查.md",
+          "department": "运维",
+          "version": "2.1",
+          "heading": "PAY_TIMEOUT 排查",
+          "page": null,
+          "text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。",
+          "matched_text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。"
+        },
+        {
+          "id": "b11b92e18cb748cdbd32f9a97a3d063f",
+          "document_id": "61ea74d58e2e4689a9b72d85308ca458",
+          "version_id": "ba74eae5c51b435eb173879f3f14632d",
+          "title": "Webhook 通知重试.md",
+          "department": "研发",
+          "version": "1.0",
+          "heading": "重试策略",
+          "page": null,
+          "text": "通知发送失败采用最多 3 次指数退避重试，间隔为 1 秒、2 秒、4 秒。超过次数进入人工处理队列，不无限重试。",
+          "matched_text": "通知发送失败采用最多 3 次指数退避重试，间隔为 1 秒、2 秒、4 秒。超过次数进入人工处理队列，不无限重试。"
+        },
+        {
+          "id": "d0ce866286fc4713ae2c2e16dc6a8093",
+          "document_id": "4ca578fb62c54eea9a67a36f8dfff282",
+          "version_id": "c8df17798a624e0db802e3d52b71ccd3",
+          "title": "故障等级与响应.md",
+          "department": "运维",
+          "version": "2.0",
+          "heading": "故障分级",
+          "page": null,
+          "text": "P1 表示核心交易完全不可用，要求 5 分钟内响应。P2 表示部分用户受影响且存在降级路径，要求 15 分钟内响应。",
+          "matched_text": "P1 表示核心交易完全不可用，要求 5 分钟内响应。P2 表示部分用户受影响且存在降级路径，要求 15 分钟内响应。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 4956.1
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 6.61,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 7.29,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 7.74,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 10.12,
+      "permission_pass": true,
+      "claims": [],
+      "refused": true,
+      "refusal_match": true,
+      "citation_contract_pass": null,
+      "evidence": [
+        {
+          "id": "f2f5175020a246d59e060b0288d98b2c",
+          "document_id": "4f8a38bc34014a15b79bd460ed48a6f3",
+          "version_id": "fb97525daacd4d00ad1869a350a46245",
+          "title": "容器健康检查.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "启动保护",
+          "page": null,
+          "text": "启动耗时较长的服务配置 startupProbe。在启动探针成功之前，不执行存活与就绪探针检查。",
+          "matched_text": "启动耗时较长的服务配置 startupProbe。在启动探针成功之前，不执行存活与就绪探针检查。"
+        },
+        {
+          "id": "3be9ae0b4d964853bad70d24284c1250",
+          "document_id": "1345622f8ceb4c179c7d38a59f3e1545",
+          "version_id": "b201849db6094b6795017fd0f9efa346",
+          "title": "MySQL 连接池耗尽.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "慢查询处理",
+          "page": null,
+          "text": "超过 1000 毫秒的 SQL 进入慢查询日志。先执行 EXPLAIN 检查执行计划，再分析索引选择；涉及生产索引变更需要审批。",
+          "matched_text": "超过 1000 毫秒的 SQL 进入慢查询日志。先执行 EXPLAIN 检查执行计划，再分析索引选择；涉及生产索引变更需要审批。"
+        },
+        {
+          "id": "eb7a05f322d746e89f05ce0558cc5878",
+          "document_id": "3d79983508f247eb923d81acd7e7410e",
+          "version_id": "ac848704333a4c5698d5cc998653e667",
+          "title": "支付网关超时排查.md",
+          "department": "运维",
+          "version": "2.1",
+          "heading": "PAY_TIMEOUT 排查",
+          "page": null,
+          "text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。",
+          "matched_text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。"
+        },
+        {
+          "id": "545134db3bb9430f907bfa04a997ab68",
+          "document_id": "f593e30bbc7a4007ae0966e1e18c2f14",
+          "version_id": "c1ee3e399f5d433fbeaf2217c18897be",
+          "title": "数据库备份与恢复.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "恢复演练",
+          "page": null,
+          "text": "每月执行一次隔离环境恢复演练，验证数据可读性和业务查询。备份成功不等于恢复成功，演练结果写入恢复记录。",
+          "matched_text": "每月执行一次隔离环境恢复演练，验证数据可读性和业务查询。备份成功不等于恢复成功，演练结果写入恢复记录。"
+        },
+        {
+          "id": "d0ce866286fc4713ae2c2e16dc6a8093",
+          "document_id": "4ca578fb62c54eea9a67a36f8dfff282",
+          "version_id": "c8df17798a624e0db802e3d52b71ccd3",
+          "title": "故障等级与响应.md",
+          "department": "运维",
+          "version": "2.0",
+          "heading": "故障分级",
+          "page": null,
+          "text": "P1 表示核心交易完全不可用，要求 5 分钟内响应。P2 表示部分用户受影响且存在降级路径，要求 15 分钟内响应。",
+          "matched_text": "P1 表示核心交易完全不可用，要求 5 分钟内响应。P2 表示部分用户受影响且存在降级路径，要求 15 分钟内响应。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 4679.77
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 7.45,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "api-rate-v2",
+        "mysql-pool",
+        "refund-definition",
+        "backup",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 10.75,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "api-rate-v2",
+        "mysql-pool",
+        "refund-definition",
+        "backup",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 13.68,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "api-rate-v2",
+        "mysql-pool",
+        "refund-definition",
+        "backup",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 11.0,
+      "permission_pass": true,
+      "claims": [],
+      "refused": true,
+      "refusal_match": true,
+      "citation_contract_pass": null,
+      "evidence": [
+        {
+          "id": "8439aebe5b7f499d88b92cd0fa2e139a",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "限流策略表",
+          "page": null,
+          "text": "| 接口 | 每租户每秒请求数 | 版本 |\n| GET /api/orders | 100 | 2.0 |\n| POST /api/orders | 20 | 2.0 |",
+          "matched_text": "| 接口 | 每租户每秒请求数 | 版本 |\n| GET /api/orders | 100 | 2.0 |\n| POST /api/orders | 20 | 2.0 |"
+        },
+        {
+          "id": "1fdb7fad93ad4ec09587b7296513d9b2",
+          "document_id": "1345622f8ceb4c179c7d38a59f3e1545",
+          "version_id": "b201849db6094b6795017fd0f9efa346",
+          "title": "MySQL 连接池耗尽.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "DB_POOL_EXHAUSTED",
+          "page": null,
+          "text": "出现 DB_POOL_EXHAUSTED 时检查活跃连接数、慢查询和未提交事务。应用连接池最大连接数为 30，获取连接超时为 2000 毫秒。优先定位连接泄漏，禁止仅靠增加连接数缓解。",
+          "matched_text": "出现 DB_POOL_EXHAUSTED 时检查活跃连接数、慢查询和未提交事务。应用连接池最大连接数为 30，获取连接超时为 2000 毫秒。优先定位连接泄漏，禁止仅靠增加连接数缓解。"
+        },
+        {
+          "id": "b4ceb401b3e74ae0a62623c92e66ef8d",
+          "document_id": "edd2759d61b04a24bd3d44bf9de2f764",
+          "version_id": "9fad3304cf6d45d8871eda74cae5c695",
+          "title": "退款率指标口径.md",
+          "department": "业务",
+          "version": "1.0",
+          "heading": "归因限制",
+          "page": null,
+          "text": "退款率变化只能说明指标异常。定位到广告渠道不等于证明投放导致退款，需要结合退款原因码、活动变更和用户反馈进一步验证。",
+          "matched_text": "退款率变化只能说明指标异常。定位到广告渠道不等于证明投放导致退款，需要结合退款原因码、活动变更和用户反馈进一步验证。"
+        },
+        {
+          "id": "386708c7ae594dea9330911b7aabcd59",
+          "document_id": "f593e30bbc7a4007ae0966e1e18c2f14",
+          "version_id": "c1ee3e399f5d433fbeaf2217c18897be",
+          "title": "数据库备份与恢复.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "数据库备份策略",
+          "page": null,
+          "text": "MySQL 每天凌晨 02:00 执行全量备份，保留最近 7 天备份；binlog 保留 14 天。备份完成必须校验文件完整性。",
+          "matched_text": "MySQL 每天凌晨 02:00 执行全量备份，保留最近 7 天备份；binlog 保留 14 天。备份完成必须校验文件完整性。"
+        },
+        {
+          "id": "bcc3f4229f194d03bf7cd154ecb78d25",
+          "document_id": "d7e1f5b50b5a45a188c697556836907f",
+          "version_id": "2d1bf3ebb2ce467ead42ab77bd070dc4",
+          "title": "接口限流配置新版.md",
+          "department": "研发",
+          "version": "2.0",
+          "heading": "订单接口限流 v2.0",
+          "page": null,
+          "text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。",
+          "matched_text": "订单查询接口 GET /api/orders 的单租户限流阈值为每秒 100 次请求。超出阈值返回 HTTP 429，客户端按 Retry-After 等待。此文档仅适用于 2.0 版本。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 5111.85
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 7.77,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "refund-definition",
+        "mysql-pool",
+        "payment-timeout",
+        "refund-definition"
+      ],
+      "retrieval_ms": 10.37,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "refund-definition",
+        "mysql-pool",
+        "payment-timeout",
+        "refund-definition"
+      ],
+      "retrieval_ms": 13.29,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "refund-definition",
+        "mysql-pool",
+        "payment-timeout",
+        "refund-definition"
+      ],
+      "retrieval_ms": 13.07,
+      "permission_pass": true,
+      "claims": [],
+      "refused": true,
+      "refusal_match": true,
+      "citation_contract_pass": null,
+      "evidence": [
+        {
+          "id": "545134db3bb9430f907bfa04a997ab68",
+          "document_id": "f593e30bbc7a4007ae0966e1e18c2f14",
+          "version_id": "c1ee3e399f5d433fbeaf2217c18897be",
+          "title": "数据库备份与恢复.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "恢复演练",
+          "page": null,
+          "text": "每月执行一次隔离环境恢复演练，验证数据可读性和业务查询。备份成功不等于恢复成功，演练结果写入恢复记录。",
+          "matched_text": "每月执行一次隔离环境恢复演练，验证数据可读性和业务查询。备份成功不等于恢复成功，演练结果写入恢复记录。"
+        },
+        {
+          "id": "8252e91aa2024c1ab6a78231743a7636",
+          "document_id": "edd2759d61b04a24bd3d44bf9de2f764",
+          "version_id": "9fad3304cf6d45d8871eda74cae5c695",
+          "title": "退款率指标口径.md",
+          "department": "业务",
+          "version": "1.0",
+          "heading": "退款率定义",
+          "page": null,
+          "text": "退款率 = 退款订单数 / 已创建订单数。按订单创建时间归属统计周期，不按退款完成时间分组。已取消但未退款的订单不计入退款分子。",
+          "matched_text": "退款率 = 退款订单数 / 已创建订单数。按订单创建时间归属统计周期，不按退款完成时间分组。已取消但未退款的订单不计入退款分子。"
+        },
+        {
+          "id": "3be9ae0b4d964853bad70d24284c1250",
+          "document_id": "1345622f8ceb4c179c7d38a59f3e1545",
+          "version_id": "b201849db6094b6795017fd0f9efa346",
+          "title": "MySQL 连接池耗尽.md",
+          "department": "运维",
+          "version": "1.0",
+          "heading": "慢查询处理",
+          "page": null,
+          "text": "超过 1000 毫秒的 SQL 进入慢查询日志。先执行 EXPLAIN 检查执行计划，再分析索引选择；涉及生产索引变更需要审批。",
+          "matched_text": "超过 1000 毫秒的 SQL 进入慢查询日志。先执行 EXPLAIN 检查执行计划，再分析索引选择；涉及生产索引变更需要审批。"
+        },
+        {
+          "id": "eb7a05f322d746e89f05ce0558cc5878",
+          "document_id": "3d79983508f247eb923d81acd7e7410e",
+          "version_id": "ac848704333a4c5698d5cc998653e667",
+          "title": "支付网关超时排查.md",
+          "department": "运维",
+          "version": "2.1",
+          "heading": "PAY_TIMEOUT 排查",
+          "page": null,
+          "text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。",
+          "matched_text": "支付请求出现 PAY_TIMEOUT 时，先检查下游支付渠道的 P95 延迟，再核对连接池等待时间。支付网关请求超时上限为 3000 毫秒。不得在未确认交易状态时直接重试扣款。"
+        },
+        {
+          "id": "b4ceb401b3e74ae0a62623c92e66ef8d",
+          "document_id": "edd2759d61b04a24bd3d44bf9de2f764",
+          "version_id": "9fad3304cf6d45d8871eda74cae5c695",
+          "title": "退款率指标口径.md",
+          "department": "业务",
+          "version": "1.0",
+          "heading": "归因限制",
+          "page": null,
+          "text": "退款率变化只能说明指标异常。定位到广告渠道不等于证明投放导致退款，需要结合退款原因码、活动变更和用户反馈进一步验证。",
+          "matched_text": "退款率变化只能说明指标异常。定位到广告渠道不等于证明投放导致退款，需要结合退款原因码、活动变更和用户反馈进一步验证。"
+        }
+      ],
+      "human_review": {
+        "supported": null,
+        "correct": null,
+        "complete": null,
+        "notes": ""
+      },
+      "generation_ms": 4291.67
+    }
+  ]
+}

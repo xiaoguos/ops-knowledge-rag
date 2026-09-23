@@ -40,6 +40,7 @@ class DocumentVersion(Base):
     payload: Mapped[bytes] = mapped_column(LargeBinary)
     state: Mapped[str] = mapped_column(String(20), default="pending")
     embedding_model: Mapped[str] = mapped_column(String(120), default="")
+    processing: Mapped[dict] = mapped_column(JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
 
 
@@ -51,6 +52,7 @@ class Chunk(Base):
     )
     heading: Mapped[str] = mapped_column(Text)
     text: Mapped[str] = mapped_column(Text)
+    parent_text: Mapped[str] = mapped_column(Text, default="")
     page: Mapped[int | None] = mapped_column(Integer, nullable=True)
     embedding: Mapped[list] = mapped_column(Vector(512).with_variant(JSON, "sqlite"))
     lexical: Mapped[str | None] = mapped_column(

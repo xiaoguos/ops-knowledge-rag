@@ -1,0 +1,2286 @@
+{
+  "generated_at": "2026-09-23T08:15:07.992406+00:00",
+  "scope": "人工编写的合成回归集；用于当前Knowledge入口，不是独立企业用户测试集。",
+  "entrypoint": "app.production.Knowledge",
+  "database": "isolated SQLite; not a PostgreSQL load test",
+  "embedding": "fastembed:BAAI/bge-small-zh-v1.5",
+  "generation": "not_run",
+  "case_count": 36,
+  "dataset_sha256": "3376d952c9547569ac8b0366062a68d94fbfc64788cffadfa29eeb1646dabf26",
+  "metric_unit": "unique gold document coverage among the first 5 evidence items; unanswerable excluded from recall",
+  "summary": [
+    {
+      "strategy": "bm25",
+      "cases": 36,
+      "answerable_cases": 30,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 3,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 9.8908
+    },
+    {
+      "strategy": "vector",
+      "cases": 36,
+      "answerable_cases": 30,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 3,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 13.8031
+    },
+    {
+      "strategy": "hybrid",
+      "cases": 36,
+      "answerable_cases": 30,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 3,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 13.7306
+    },
+    {
+      "strategy": "hybrid_expanded",
+      "cases": 36,
+      "answerable_cases": 30,
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": 1,
+      "permission_cases": 3,
+      "permission_pass_rate": 1,
+      "generation_attempts": 0,
+      "generation_errors": 0,
+      "refusal_match_rate": null,
+      "citation_contract_pass_rate": null,
+      "mean_retrieval_ms": 14.3992
+    }
+  ],
+  "human_semantic_pass_rate": null,
+  "details": [
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "auth-token",
+        "api-rate-v2",
+        "payment-timeout",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 11.59,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "mysql-pool",
+        "auth-token",
+        "incident-severity",
+        "api-rate-v1"
+      ],
+      "retrieval_ms": 12.28,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "mysql-pool",
+        "api-rate-v1",
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 12.49,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r01",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "mysql-pool",
+        "api-rate-v1",
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 12.25,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r02",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "payment-timeout",
+        "webhook",
+        "refund-definition",
+        "api-rate-v1"
+      ],
+      "retrieval_ms": 10.06,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r02",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "payment-timeout",
+        "webhook",
+        "incident-severity",
+        "refund-definition"
+      ],
+      "retrieval_ms": 14.81,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r02",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "payment-timeout",
+        "webhook",
+        "api-rate-v1",
+        "refund-definition"
+      ],
+      "retrieval_ms": 14.83,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r02",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "payment-timeout",
+        "webhook",
+        "api-rate-v1",
+        "refund-definition"
+      ],
+      "retrieval_ms": 11.55,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r03",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 10.71,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r03",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "mysql-pool",
+        "api-rate-v2",
+        "redis-memory"
+      ],
+      "retrieval_ms": 13.16,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r03",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "mysql-pool",
+        "api-rate-v2",
+        "redis-memory"
+      ],
+      "retrieval_ms": 13.73,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r03",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "mysql-pool",
+        "api-rate-v2",
+        "redis-memory"
+      ],
+      "retrieval_ms": 13.62,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r04",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "api-rate-v1",
+        "api-rate-v2",
+        "refund-definition",
+        "deployment-rollback"
+      ],
+      "retrieval_ms": 8.96,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r04",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "k8s-probe",
+        "mysql-pool",
+        "incident-severity"
+      ],
+      "retrieval_ms": 13.67,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r04",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "deployment-rollback",
+        "api-rate-v1",
+        "incident-severity"
+      ],
+      "retrieval_ms": 13.4,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r04",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "deployment-rollback",
+        "api-rate-v1",
+        "incident-severity"
+      ],
+      "retrieval_ms": 12.47,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory"
+      ],
+      "retrieval_ms": 9.75,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "incident-severity",
+        "k8s-probe",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 14.1,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "payment-timeout",
+        "incident-severity",
+        "k8s-probe",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 11.78,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r05",
+      "family": "oral",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "redis-memory",
+        "webhook",
+        "api-rate-v1",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 16.71,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r06",
+      "family": "code",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "redis-memory",
+        "payment-timeout",
+        "mysql-pool",
+        "incident-severity"
+      ],
+      "retrieval_ms": 10.2,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r06",
+      "family": "code",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "redis-memory",
+        "payment-timeout",
+        "mysql-pool",
+        "incident-severity"
+      ],
+      "retrieval_ms": 16.54,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r06",
+      "family": "code",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "mysql-pool",
+        "webhook",
+        "payment-timeout",
+        "redis-memory"
+      ],
+      "retrieval_ms": 14.55,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r06",
+      "family": "code",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "redis-memory",
+        "mysql-pool",
+        "webhook",
+        "payment-timeout",
+        "redis-memory"
+      ],
+      "retrieval_ms": 15.35,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 5.15,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 7.15,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 6.32,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r07",
+      "family": "table",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 6.4,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r08",
+      "family": "table",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 2.85,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r08",
+      "family": "table",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "incident-severity",
+        "api-rate-v2",
+        "incident-severity"
+      ],
+      "retrieval_ms": 7.0,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r08",
+      "family": "table",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 6.93,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r08",
+      "family": "table",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v2",
+        "api-rate-v2",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 7.5,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r09",
+      "family": "version",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v1",
+        "refund-definition",
+        "auth-token",
+        "mysql-pool",
+        "backup"
+      ],
+      "retrieval_ms": 6.36,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r09",
+      "family": "version",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v1",
+        "refund-definition",
+        "mysql-pool",
+        "mysql-pool",
+        "auth-token"
+      ],
+      "retrieval_ms": 11.85,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r09",
+      "family": "version",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v1",
+        "mysql-pool",
+        "auth-token",
+        "mysql-pool",
+        "refund-definition"
+      ],
+      "retrieval_ms": 11.29,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r09",
+      "family": "version",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "api-rate-v1",
+        "mysql-pool",
+        "auth-token",
+        "mysql-pool",
+        "refund-definition"
+      ],
+      "retrieval_ms": 8.18,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r10",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "incident-severity",
+        "k8s-probe",
+        "mysql-pool",
+        "webhook"
+      ],
+      "retrieval_ms": 9.45,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r10",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "redis-memory",
+        "mysql-pool",
+        "payment-timeout",
+        "incident-severity"
+      ],
+      "retrieval_ms": 13.39,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r10",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "incident-severity",
+        "mysql-pool",
+        "payment-timeout",
+        "webhook"
+      ],
+      "retrieval_ms": 12.98,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r10",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "incident-severity",
+        "mysql-pool",
+        "payment-timeout",
+        "webhook"
+      ],
+      "retrieval_ms": 13.96,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r11",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "api-rate-v1",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 9.74,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r11",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "payment-timeout",
+        "auth-token",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 14.15,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r11",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "payment-timeout",
+        "api-rate-v2",
+        "api-rate-v1",
+        "backup"
+      ],
+      "retrieval_ms": 15.42,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r11",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "payment-timeout",
+        "api-rate-v2",
+        "api-rate-v1",
+        "backup"
+      ],
+      "retrieval_ms": 13.07,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r12",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "api-rate-v1",
+        "api-rate-v2",
+        "auth-token",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 10.57,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r12",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "payment-timeout",
+        "mysql-pool",
+        "auth-token",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 12.41,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r12",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "api-rate-v1",
+        "mysql-pool",
+        "auth-token",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 11.89,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r12",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "mysql-pool",
+        "api-rate-v1",
+        "mysql-pool",
+        "auth-token",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 11.62,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r13",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback"
+      ],
+      "retrieval_ms": 8.6,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r13",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "webhook",
+        "payment-timeout",
+        "redis-memory"
+      ],
+      "retrieval_ms": 14.73,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r13",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "webhook",
+        "payment-timeout",
+        "redis-memory"
+      ],
+      "retrieval_ms": 13.34,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r13",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "webhook",
+        "payment-timeout",
+        "redis-memory"
+      ],
+      "retrieval_ms": 15.57,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r14",
+      "family": "oral",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "auth-token",
+        "api-rate-v2",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 8.71,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r14",
+      "family": "oral",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "deployment-rollback",
+        "backup",
+        "refund-definition",
+        "auth-token"
+      ],
+      "retrieval_ms": 11.43,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r14",
+      "family": "oral",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "auth-token",
+        "backup",
+        "incident-severity",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 11.99,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r14",
+      "family": "oral",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "backup",
+        "auth-token",
+        "incident-severity"
+      ],
+      "retrieval_ms": 21.2,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r15",
+      "family": "boundary",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "auth-token",
+        "backup",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 9.02,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r15",
+      "family": "boundary",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "k8s-probe",
+        "auth-token",
+        "backup"
+      ],
+      "retrieval_ms": 13.0,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r15",
+      "family": "boundary",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "auth-token",
+        "k8s-probe",
+        "backup"
+      ],
+      "retrieval_ms": 16.11,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r15",
+      "family": "boundary",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "deployment-rollback",
+        "auth-token",
+        "k8s-probe",
+        "backup"
+      ],
+      "retrieval_ms": 14.75,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r16",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "redis-memory",
+        "incident-severity",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 9.79,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r16",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "webhook",
+        "mysql-pool",
+        "webhook"
+      ],
+      "retrieval_ms": 13.68,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r16",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "payment-timeout",
+        "incident-severity",
+        "redis-memory"
+      ],
+      "retrieval_ms": 14.33,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r16",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "payment-timeout",
+        "incident-severity",
+        "redis-memory"
+      ],
+      "retrieval_ms": 17.29,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r17",
+      "family": "boundary",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "k8s-probe",
+        "webhook",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 12.34,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r17",
+      "family": "boundary",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "incident-severity",
+        "webhook",
+        "webhook"
+      ],
+      "retrieval_ms": 15.16,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r17",
+      "family": "boundary",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "webhook",
+        "payment-timeout",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 12.27,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r17",
+      "family": "boundary",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "refund-definition",
+        "refund-definition",
+        "webhook",
+        "payment-timeout",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 13.28,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r18",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 10.6,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r18",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "incident-severity",
+        "k8s-probe",
+        "payment-timeout",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 13.73,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r18",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "incident-severity",
+        "k8s-probe",
+        "payment-timeout",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 15.03,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r18",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "incident-severity",
+        "k8s-probe",
+        "payment-timeout",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 15.34,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r19",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "backup",
+        "incident-severity",
+        "auth-token",
+        "backup"
+      ],
+      "retrieval_ms": 12.22,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r19",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "backup",
+        "backup",
+        "incident-severity",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 14.53,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r19",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "backup",
+        "incident-severity",
+        "backup",
+        "auth-token"
+      ],
+      "retrieval_ms": 13.49,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r19",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "backup",
+        "incident-severity",
+        "backup",
+        "auth-token"
+      ],
+      "retrieval_ms": 12.1,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r20",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token"
+      ],
+      "retrieval_ms": 10.95,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r20",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "webhook",
+        "redis-memory",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 13.54,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r20",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "webhook",
+        "redis-memory",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 17.98,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r20",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "webhook",
+        "redis-memory",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 18.33,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r21",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "auth-token"
+      ],
+      "retrieval_ms": 13.78,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r21",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "auth-token",
+        "backup",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 24.37,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r21",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "auth-token",
+        "backup",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 16.54,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r21",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "auth-token",
+        "backup",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 32.4,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "backup",
+        "mysql-pool",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 13.55,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "backup",
+        "auth-token",
+        "redis-memory"
+      ],
+      "retrieval_ms": 18.19,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "backup",
+        "incident-severity",
+        "backup"
+      ],
+      "retrieval_ms": 18.88,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r22",
+      "family": "security",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "auth-token",
+        "mysql-pool",
+        "backup",
+        "incident-severity",
+        "backup"
+      ],
+      "retrieval_ms": 17.33,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r23",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "deployment-rollback"
+      ],
+      "retrieval_ms": 11.66,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r23",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "redis-memory",
+        "incident-severity",
+        "incident-severity"
+      ],
+      "retrieval_ms": 20.43,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r23",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "deployment-rollback",
+        "redis-memory",
+        "incident-severity"
+      ],
+      "retrieval_ms": 14.84,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r23",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "deployment-rollback",
+        "redis-memory",
+        "incident-severity"
+      ],
+      "retrieval_ms": 15.18,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r24",
+      "family": "boundary",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "k8s-probe",
+        "webhook",
+        "backup",
+        "refund-definition"
+      ],
+      "retrieval_ms": 14.3,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r24",
+      "family": "boundary",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "incident-severity",
+        "incident-severity",
+        "webhook"
+      ],
+      "retrieval_ms": 17.11,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r24",
+      "family": "boundary",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "incident-severity",
+        "incident-severity",
+        "webhook"
+      ],
+      "retrieval_ms": 17.06,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r24",
+      "family": "boundary",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "backup",
+        "backup",
+        "incident-severity",
+        "incident-severity",
+        "webhook"
+      ],
+      "retrieval_ms": 15.96,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r25",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe"
+      ],
+      "retrieval_ms": 10.8,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r25",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "mysql-pool",
+        "webhook",
+        "k8s-probe",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 15.37,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r25",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe",
+        "incident-severity",
+        "mysql-pool",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 14.93,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r25",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe",
+        "incident-severity",
+        "mysql-pool",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 14.78,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r26",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe",
+        "deployment-rollback",
+        "mysql-pool",
+        "webhook",
+        "redis-memory"
+      ],
+      "retrieval_ms": 13.58,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r26",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe",
+        "payment-timeout",
+        "mysql-pool",
+        "mysql-pool",
+        "incident-severity"
+      ],
+      "retrieval_ms": 14.03,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r26",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "mysql-pool",
+        "webhook"
+      ],
+      "retrieval_ms": 14.44,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r26",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "mysql-pool",
+        "webhook"
+      ],
+      "retrieval_ms": 15.11,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r27",
+      "family": "identifier",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "webhook"
+      ],
+      "retrieval_ms": 11.03,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r27",
+      "family": "identifier",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "auth-token",
+        "webhook",
+        "payment-timeout",
+        "incident-severity"
+      ],
+      "retrieval_ms": 16.04,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r27",
+      "family": "identifier",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "webhook",
+        "auth-token",
+        "payment-timeout",
+        "incident-severity"
+      ],
+      "retrieval_ms": 17.19,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r27",
+      "family": "identifier",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "webhook",
+        "auth-token",
+        "payment-timeout",
+        "incident-severity"
+      ],
+      "retrieval_ms": 18.68,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r28",
+      "family": "fact",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "webhook",
+        "payment-timeout",
+        "refund-definition",
+        "auth-token"
+      ],
+      "retrieval_ms": 11.34,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r28",
+      "family": "fact",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "incident-severity",
+        "incident-severity",
+        "backup",
+        "mysql-pool"
+      ],
+      "retrieval_ms": 22.33,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r28",
+      "family": "fact",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "auth-token",
+        "payment-timeout",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 21.45,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r28",
+      "family": "fact",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "auth-token",
+        "payment-timeout",
+        "webhook",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 20.1,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "payment-timeout"
+      ],
+      "retrieval_ms": 9.93,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "incident-severity"
+      ],
+      "retrieval_ms": 15.91,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "incident-severity"
+      ],
+      "retrieval_ms": 15.87,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r29",
+      "family": "multi_evidence",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "payment-timeout",
+        "webhook",
+        "payment-timeout",
+        "webhook",
+        "incident-severity"
+      ],
+      "retrieval_ms": 15.79,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r30",
+      "family": "multi_evidence",
+      "strategy": "bm25",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "incident-severity",
+        "deployment-rollback",
+        "deployment-rollback",
+        "incident-severity",
+        "backup"
+      ],
+      "retrieval_ms": 10.63,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r30",
+      "family": "multi_evidence",
+      "strategy": "vector",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "incident-severity",
+        "backup",
+        "backup",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 12.08,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r30",
+      "family": "multi_evidence",
+      "strategy": "hybrid",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "incident-severity",
+        "backup",
+        "deployment-rollback",
+        "incident-severity"
+      ],
+      "retrieval_ms": 17.18,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r30",
+      "family": "multi_evidence",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": 1.0,
+      "all_evidence_at_5": true,
+      "retrieved": [
+        "deployment-rollback",
+        "incident-severity",
+        "backup",
+        "deployment-rollback",
+        "incident-severity"
+      ],
+      "retrieval_ms": 15.18,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 8.85,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 8.4,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 10.45,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r31",
+      "family": "permission",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "k8s-probe",
+        "mysql-pool",
+        "payment-timeout",
+        "backup",
+        "incident-severity"
+      ],
+      "retrieval_ms": 10.0,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r32",
+      "family": "permission",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 3.86,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r32",
+      "family": "permission",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "webhook",
+        "api-rate-v2",
+        "webhook",
+        "api-rate-v1",
+        "auth-token"
+      ],
+      "retrieval_ms": 7.47,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r32",
+      "family": "permission",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "webhook",
+        "api-rate-v2",
+        "webhook",
+        "api-rate-v1",
+        "auth-token"
+      ],
+      "retrieval_ms": 7.89,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r32",
+      "family": "permission",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "webhook",
+        "api-rate-v2",
+        "webhook",
+        "api-rate-v1",
+        "auth-token"
+      ],
+      "retrieval_ms": 7.55,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r33",
+      "family": "permission",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 7.52,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r33",
+      "family": "permission",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 4.84,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r33",
+      "family": "permission",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 5.04,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r33",
+      "family": "permission",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 5.04,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 8.33,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "api-rate-v2",
+        "mysql-pool",
+        "refund-definition",
+        "backup",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 11.37,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "api-rate-v2",
+        "mysql-pool",
+        "refund-definition",
+        "backup",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 13.94,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r34",
+      "family": "unanswerable",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "api-rate-v2",
+        "mysql-pool",
+        "refund-definition",
+        "backup",
+        "api-rate-v2"
+      ],
+      "retrieval_ms": 15.51,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r35",
+      "family": "unanswerable",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "auth-token",
+        "deployment-rollback",
+        "backup",
+        "mysql-pool",
+        "k8s-probe"
+      ],
+      "retrieval_ms": 10.89,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r35",
+      "family": "unanswerable",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "redis-memory",
+        "mysql-pool",
+        "mysql-pool",
+        "auth-token"
+      ],
+      "retrieval_ms": 14.41,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r35",
+      "family": "unanswerable",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "auth-token",
+        "mysql-pool",
+        "k8s-probe",
+        "backup"
+      ],
+      "retrieval_ms": 14.17,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r35",
+      "family": "unanswerable",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "auth-token",
+        "mysql-pool",
+        "k8s-probe",
+        "backup"
+      ],
+      "retrieval_ms": 14.39,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "bm25",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [],
+      "retrieval_ms": 8.4,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "vector",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "refund-definition",
+        "mysql-pool",
+        "payment-timeout",
+        "refund-definition"
+      ],
+      "retrieval_ms": 14.25,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "hybrid",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "refund-definition",
+        "mysql-pool",
+        "payment-timeout",
+        "refund-definition"
+      ],
+      "retrieval_ms": 14.28,
+      "permission_pass": true
+    },
+    {
+      "case_id": "r36",
+      "family": "unanswerable",
+      "strategy": "hybrid_expanded",
+      "recall_at_5": null,
+      "all_evidence_at_5": null,
+      "retrieved": [
+        "backup",
+        "refund-definition",
+        "mysql-pool",
+        "payment-timeout",
+        "refund-definition"
+      ],
+      "retrieval_ms": 14.83,
+      "permission_pass": true
+    }
+  ]
+}
